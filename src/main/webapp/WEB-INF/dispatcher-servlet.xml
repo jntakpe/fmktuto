@@ -13,7 +13,7 @@
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-    <context:component-scan base-package="fr.sg.fmk.web, fr.sg.app.web"/>
+    <context:component-scan base-package="fr.sg.fmk.web, fr.sg.tuto.web"/>
 
     <mvc:default-servlet-handler/>
 

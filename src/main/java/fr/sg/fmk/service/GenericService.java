@@ -1,9 +1,9 @@
 package fr.sg.fmk.service;
 
+import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessException;
 import fr.sg.fmk.domain.GenericDomain;
 import fr.sg.fmk.exception.BusinessCode;
-import fr.sg.fmk.exception.BusinessException;
 
 /**
  * Interface fournissant les services usuels
@@ -71,12 +71,10 @@ public interface GenericService<T extends GenericDomain> {
     /**
      * Si une contrainte d'unicité existe sur un champ renvoi true si cette dernière est respectée
      *
-     * @param fieldName nom du champ
-     * @param id        identifiant de l'entité
-     * @param value     valeur du champ
+     * @param unicity objet contenant les informations sur le champ à contrôler
      * @return true si cette valeur respecte la contrainte d'unicité sinon false
      */
-    boolean isAvaillable(String fieldName, Long id, Object value);
+    boolean isAvaillable(Unicity unicity);
 
     /**
      * Créé une exception métier

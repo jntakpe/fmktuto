@@ -1,10 +1,7 @@
 package fr.sg.fmk.service.impl;
 
 import fr.sg.fmk.domain.GenericDomain;
-import fr.sg.fmk.exception.BusinessCode;
-import fr.sg.fmk.exception.BusinessException;
-import fr.sg.fmk.service.GenericService;
-import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
 import fr.sg.fmk.exception.BusinessException;
 import fr.sg.fmk.service.GenericService;
@@ -106,8 +103,9 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
      */
     @Override
     @Transactional(readOnly = true)
-    public boolean isAvaillable(String fieldName, Long id, Object value) {
+    public boolean isAvaillable(Unicity unicity) {
         Class<T> domainClass = getDomainClass();
+        String fieldName = unicity.getField();
         Field field = ReflectionUtils.findField(domainClass, fieldName);
         if (field == null) throw createBussinessException(BusinessCode.ENTITY_FIELD_MISSING, fieldName, domainClass);
         Class<?> fieldClass = ReflectionUtils.findField(getDomainClass(), fieldName).getType();
@@ -118,8 +116,8 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
         Method method = ReflectionUtils.findMethod(repo, name, fieldClass);
         if (method == null && (method = ReflectionUtils.findMethod(repo, nameIC, fieldClass)) == null)
             throw createBussinessException(BusinessCode.REPOSITORY_METHOD_MISSING, fieldName, repo, name, nameIC);
-        T entity = (T) ReflectionUtils.invokeMethod(method, getRepository(), value);
-        return entity == null || entity.getId().equals(id);
+        T entity = (T) ReflectionUtils.invokeMethod(method, getRepository(), unicity.getValue());
+        return entity == null || entity.getId().equals(unicity.getId());
     }
 
     /**

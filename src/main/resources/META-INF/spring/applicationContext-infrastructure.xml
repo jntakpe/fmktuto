@@ -21,7 +21,7 @@
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
         <property name="dataSource" ref="fmktutoDS"/>
-        <property name="packagesToScan" value="fr.sg.fmk.domain, fr.sg.fmk.domain"/>
+        <property name="packagesToScan" value="fr.sg.fmk.domain, fr.sg.tuto.domain"/>
         <property name="${persistence.prop.name}" value="${persistence.prop.value}"/>
     </bean>
 
@@ -31,6 +31,6 @@
 
     <tx:annotation-driven/>
 
-    <jpa:repositories base-package="fr.sg.fmk.repository"/>
+    <jpa:repositories base-package="fr.sg.fmk.repository, fr.sg.tuto.repository"/>
 
 </beans>

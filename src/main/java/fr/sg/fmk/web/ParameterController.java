@@ -46,6 +46,11 @@ public class ParameterController extends GenericController<Parameter> {
     }
 
     @Override
+    protected String pageName() {
+        return "fmk/parameter";
+    }
+
+    @Override
     public ModelAndView display() {
         return super.display().addObject("formats", Format.values());
     }

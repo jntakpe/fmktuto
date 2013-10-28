@@ -7,12 +7,6 @@ import fr.sg.fmk.dto.ResponseMessage;
 import fr.sg.fmk.service.GenericService;
 import fr.sg.fmk.service.MessageManager;
 import fr.sg.fmk.util.FmkUtils;
-import fr.sg.fmk.constant.LogLevel;
-import fr.sg.fmk.domain.GenericDomain;
-import fr.sg.fmk.dto.ResponseMessage;
-import fr.sg.fmk.service.GenericService;
-import fr.sg.fmk.service.MessageManager;
-import fr.sg.fmk.util.FmkUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -76,22 +70,6 @@ public abstract class GenericController<T extends GenericDomain> {
     @ResponseBody
     public Iterable<T> listAll() {
         return getService().findAll();
-    }
-
-    /**
-     * Contrôle ajax d'une contrainte d'unicité
-     *
-     * @param req requête
-     * @param id  identifiant du champ
-     * @param val valeur du champ
-     * @return true si cette valeur de champ est disponnible
-     */
-    @RequestMapping(value = {"/control*", "/*/control*"})
-    @ResponseBody
-    public boolean control(HttpServletRequest req, @RequestParam(required = false) Long id, @RequestParam Object val) {
-        String uri = req.getRequestURI();
-        String fieldName = uri.substring(uri.lastIndexOf(CONTROL_URI) + CONTROL_URI.length());
-        return getService().isAvaillable(fieldName, id, val);
     }
 
     /**

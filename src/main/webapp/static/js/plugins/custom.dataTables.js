@@ -33,6 +33,55 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 /** Plugins de DataTables */
 
+/**Gestion des dates */
+jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+    "date-euro-pre": function (a) {
+        if ($.trim(a) != '' && a.indexOf(':') !== -1) {
+            var frDatea = $.trim(a).split(' ');
+            var frTimea = frDatea[1].split(':');
+            var frDatea2 = frDatea[0].split('/');
+            var x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + frTimea[2]) * 1;
+        } else if ($.trim(a) != '' && a.indexOf(':') === -1) {
+            var frDatea = $.trim(a).split(' ');
+            var frDatea2 = frDatea[0].split('/');
+            var x = (frDatea2[2] + frDatea2[1] + frDatea2[0]) * 1;
+        } else {
+            var x = 10000000000000; // = l'an 1000 ...
+        }
+        return x;
+    },
+
+    "date-euro-asc": function (a, b) {
+        return a - b;
+    },
+
+    "date-euro-desc": function (a, b) {
+        return b - a;
+    }
+});
+
+
+jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+    "date-euro-simple-pre": function (a) {
+        if ($.trim(a) != '') {
+            var frDatea = $.trim(a).split(' ');
+            var frDatea2 = frDatea[0].split('/');
+            var x = (frDatea2[2] + frDatea2[1] + frDatea2[0]) * 1;
+        } else {
+            var x = 10000000000000;
+        }
+        return x;
+    },
+
+    "date-euro-simple-asc": function (a, b) {
+        return a - b;
+    },
+
+    "date-euro-simple-desc": function (a, b) {
+        return b - a;
+    }
+});
+
 /** Bootstrap theme */
 $.extend($.fn.dataTableExt.oStdClasses, {
     "sWrapper": "dataTables_wrapper form-inline"

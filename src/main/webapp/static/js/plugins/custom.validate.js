@@ -1,6 +1,20 @@
 /**
  * Modifications de jQuery validation
  */
+
+/**
+ * Objet envoyé lors d'une validation de contrainte d'unicité
+ * @param field champ auquel s'applique la contrainte d'unicité
+ * @param id identifiant de l'entité
+ * @param value valeur du champ surlequel s'applique la contrainte d'unicité
+ */
+function ValidUnicity(field, id, value) {
+    "use strict";
+    this.field = field;
+    this.id = id;
+    this.value = value;
+}
+
 /** Modification pour le plugin jQuery validation afin de respecter le theme Bootstrap */
 $.validator.setDefaults({
     errorClass: 'help-block',
@@ -49,40 +63,22 @@ jQuery.validator.addMethod("regex", function (value, element, param) {
 $.validator.addMethod("unicity", function (value, element, param) {
     "use strict";
     var loc, pathname, args, url, root, module, endModule;
-    if (param === true) {
-        pathname = window.location.pathname.substring(1);
-        if (param === true) {
-            loc = "control" + $(element).attr('name');
-        } else {
-            loc = param;
-        }
-        if (pathname.match(/\/$/)) {
-            pathname = pathname.substring(pathname.length - 1);
-        }
-        root = pathname.substring(0, pathname.indexOf("/"));
-        if ($.isNumeric(pathname.substring(pathname.lastIndexOf("/")))) {
-            endModule = pathname.lastIndexOf("/");
-        } else {
-            endModule = pathname.length;
-        }
-        module = pathname.substring(pathname.indexOf("/"), endModule);
-        url = "/" + root + module + "/" + loc;
+    pathname = window.location.pathname.substring(1);
+    loc = param === true ? "control" : param;
+    if (pathname.match(/\/$/)) {
+        pathname = pathname.substring(pathname.length - 1);
     }
+    root = pathname.substring(0, pathname.indexOf("/"));
+    if ($.isNumeric(pathname.substring(pathname.lastIndexOf("/")))) {
+        endModule = pathname.lastIndexOf("/");
+    } else {
+        endModule = pathname.length;
+    }
+    module = pathname.substring(pathname.indexOf("/"), endModule);
+    url = "/" + root + module + "/" + loc;
     args = {
         url: param === true ? url : param,
-        data: function () {
-            var id = $(element).closest('form').find("input[name='id']").val();
-            if (id) {
-                return {
-                    id: id,
-                    value: value
-                }
-            } else {
-                return {
-                    value: value
-                }
-            }
-        }()
+        data: new ValidUnicity(element, $(element).closest('form').find("input[name='id']").val(), value)
     };
     $.validator.messages.remote = "Contrainte d'unicité non respectée, veuillez modifier cette valeur.";
     return $.validator.methods.remote.call(this, value, element, args);

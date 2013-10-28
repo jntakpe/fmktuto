@@ -447,9 +447,12 @@ var fmk = {
         if (tableId) {
             $table = $('#' + tableId);
         } else {
-            $table = $event.parent('div').prev().find('table[id^=dt_]');
+            $table = $event.closest('.table-container').find('table[id^=dt_]');
             if (!$table.length) {
-                $table = $event.closest('.row').children('table[id^=dt_]');
+                $table = $event.parent('div').prev().find('table[id^=dt_]');
+                if (!$table.length) {
+                    $table = $event.closest('.row').children('table[id^=dt_]');
+                }
             }
         }
         if (!$table.length) {
