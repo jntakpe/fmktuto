@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @Order(Integer.MIN_VALUE)
-public class ServiceExceptionTranslator {
+public final class ServiceExceptionTranslator {
 
     /**
      * Encapsulation des appels aux loggers

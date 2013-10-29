@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see GenericServiceImpl
  */
 @Service
-public class ParameterServiceImpl extends GenericServiceImpl<Parameter> implements ParameterService {
+public final class ParameterServiceImpl extends GenericServiceImpl<Parameter> implements ParameterService {
 
     /**
      * Encapsulation des appels aux loggers

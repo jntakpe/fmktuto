@@ -1,12 +1,18 @@
 package fr.sg.fmk.service.impl;
 
+import com.github.dandelion.datatables.core.ajax.ColumnDef;
+import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
 import fr.sg.fmk.domain.GenericDomain;
 import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
 import fr.sg.fmk.exception.BusinessException;
 import fr.sg.fmk.service.GenericService;
 import fr.sg.fmk.service.MessageManager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +21,8 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -34,7 +42,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     /**
      * L'interface de la couche repository à utiliser
      */
-    public abstract CrudRepository<T, Long> getRepository();
+    public abstract JpaRepository<T, Long> getRepository();
 
     /**
      * {@inheritDoc}
@@ -118,6 +126,19 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
             throw createBussinessException(BusinessCode.REPOSITORY_METHOD_MISSING, fieldName, repo, name, nameIC);
         T entity = (T) ReflectionUtils.invokeMethod(method, getRepository(), unicity.getValue());
         return entity == null || entity.getId().equals(unicity.getId());
+    }
+
+    @Override
+    public PageRequest buildPageRequest(DatatablesCriterias dc) {
+        if (dc.hasOneSortedColumn() || dc.hasOneFilteredColumn()) {
+            List<Sort.Order> orders = new ArrayList<Sort.Order>();
+            for (ColumnDef columnDef : dc.getColumnDefs()) {
+                if (columnDef.isFilterable() && StringUtils.isNotBlank(columnDef.getSearch())) {
+                    orders.add(new Sort.Order())
+                }
+            }
+        }
+        return null;
     }
 
     /**

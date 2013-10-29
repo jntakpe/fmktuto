@@ -18,7 +18,7 @@ import java.util.Locale;
  * @author jntakpe
  */
 @Component
-public class MessageManagerImpl implements MessageManager {
+public final class MessageManagerImpl implements MessageManager {
 
     /**
      * Logger SLF4J

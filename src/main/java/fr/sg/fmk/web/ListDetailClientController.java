@@ -20,9 +20,9 @@ import org.springframework.web.servlet.view.RedirectView;
  * Si les contrôles doivent être effectués côté serveur utiliser le contrôleur {@link ListeDetailServerController}
  *
  * @author jntakpe
- * @see ListeDetailController
+ * @see ListDetailController
  */
-public abstract class ListeDetailClientController<T extends GenericDomain> extends ListeDetailController<T> {
+public abstract class ListDetailClientController<T extends GenericDomain> extends ListDetailController<T> {
 
     /**
      * Créé ou modifie l'entité sans contrôle. Les contrôles doivent avoir été faits côté client (JavaScript).
@@ -30,7 +30,7 @@ public abstract class ListeDetailClientController<T extends GenericDomain> exten
      * @param domain             entité à sauvegarder
      * @param redirectAttributes attributs de redirection lus à la page suivante
      * @return vue à afficher après la sauvegarde de l'entité.
-     *         Pour modifier la vue utiliser {@link fr.sg.fmk.web.ListeDetailController#getAfterSaveView()}
+     *         Pour modifier la vue utiliser {@link ListDetailController#getAfterSaveView()}
      */
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute T domain, RedirectAttributes redirectAttributes) {

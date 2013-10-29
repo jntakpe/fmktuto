@@ -1,13 +1,13 @@
 package fr.sg.fmk.dto;
 
 /**
- * Réponse renvoyée par l'application aux requêtes notamment aux requêtes AJAX.
+ * Wrapper renvoyée par l'application aux requêtes notamment aux requêtes AJAX.
  * Peut aussi être ajouté à un objet ModelAndView.
  *
  * @author jntakpe
  * @author cegiraud
  */
-public class ResponseMessage {
+public final class ResponseMessage {
 
     /**
      * Message qui sera affiché à l'écran
@@ -125,5 +125,14 @@ public class ResponseMessage {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseMessage{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

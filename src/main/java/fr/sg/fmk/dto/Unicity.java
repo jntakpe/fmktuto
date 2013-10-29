@@ -1,11 +1,11 @@
 package fr.sg.fmk.dto;
 
 /**
- * Objet permettant de contrôler la contrainte d'unicité d'un champ
+ * Wrapper permettant de contrôler la contrainte d'unicité d'un champ
  *
  * @author jntakpe
  */
-public class Unicity {
+public final class Unicity {
 
     /**
      * Nom du champ surlequel s'applique la contrainte
@@ -44,5 +44,14 @@ public class Unicity {
 
     public void setValue(Object value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Unicity{" +
+                "field='" + field + '\'' +
+                ", id=" + id +
+                ", value=" + value +
+                '}';
     }
 }

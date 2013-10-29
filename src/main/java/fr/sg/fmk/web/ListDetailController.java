@@ -12,14 +12,14 @@ import org.springframework.web.servlet.View;
  * Contrôleur permettant d'afficher les détails correspondants aux entités de la liste pour effectuer les opérations
  * de création et modification.
  * Cette classe ne doit pas être directement appelée (package local).
- * Veuillez utiliser ces classes filles {@link ListeDetailServerController} ou {@link ListeDetailClientController}.
+ * Veuillez utiliser ces classes filles {@link ListeDetailServerController} ou {@link ListDetailClientController}.
  *
  * @author jntakpe
  * @see ListeDetailServerController
- * @see ListeDetailClientController
+ * @see ListDetailClientController
  * @see ListController
  */
-abstract class ListeDetailController<T extends GenericDomain> extends ListController<T> {
+abstract class ListDetailController<T extends GenericDomain> extends ListController<T> {
 
     /**
      * Affiche l'écran détail de création d'un nouveau élément
