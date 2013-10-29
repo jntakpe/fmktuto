@@ -11,6 +11,7 @@ import fr.sg.fmk.service.MessageManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
@@ -129,7 +130,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     }
 
     @Override
-    public PageRequest buildPageRequest(DatatablesCriterias dc) {
+    public Pageable buildPageRequest(DatatablesCriterias dc) {
         if (dc.hasOneSortedColumn() || dc.hasOneFilteredColumn()) {
             List<Sort.Order> orders = new ArrayList<Sort.Order>();
             for (ColumnDef columnDef : dc.getColumnDefs()) {

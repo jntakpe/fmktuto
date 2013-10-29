@@ -1,11 +1,11 @@
 package fr.sg.fmk.service;
 
 import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
-import fr.sg.fmk.dto.Unicity;
-import fr.sg.fmk.exception.BusinessException;
 import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
-import org.springframework.data.domain.PageRequest;
+import fr.sg.fmk.exception.BusinessException;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Interface fournissant les services usuels
@@ -78,7 +78,7 @@ public interface GenericService<T extends GenericDomain> {
      */
     boolean isAvaillable(Unicity unicity);
 
-    PageRequest buildPageRequest(DatatablesCriterias dc);
+    Pageable buildPageRequest(DatatablesCriterias dc);
 
     /**
      * Créé une exception métier
