@@ -6,9 +6,11 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
+ * Interface à étendre lors de la création d'un repository géré par le framework
+ *
  * @author jntakpe
  */
 @NoRepositoryBean
-public interface WrapRepository<T extends GenericDomain> extends JpaRepository<T, Long>, QueryDslPredicateExecutor<T> {
+public interface FmkRepository<T extends GenericDomain> extends JpaRepository<T, Long>, QueryDslPredicateExecutor<T> {
 
 }

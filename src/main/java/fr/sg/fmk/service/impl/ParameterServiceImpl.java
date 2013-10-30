@@ -1,6 +1,7 @@
 package fr.sg.fmk.service.impl;
 
 import fr.sg.fmk.domain.Parameter;
+import fr.sg.fmk.repository.FmkRepository;
 import fr.sg.fmk.repository.ParameterRepository;
 import fr.sg.fmk.domain.Parameter;
 import fr.sg.fmk.repository.ParameterRepository;
@@ -30,7 +31,7 @@ public class ParameterServiceImpl extends GenericServiceImpl<Parameter> implemen
      * {@inheritDoc}
      */
     @Override
-    public JpaRepository<Parameter, Long> getRepository() {
+    public FmkRepository<Parameter> getRepository() {
         return parameterRepository;
     }
 

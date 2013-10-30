@@ -7,7 +7,6 @@ import com.github.dandelion.datatables.extras.spring3.ajax.DatatablesParams;
 import fr.sg.fmk.domain.GenericDomain;
 import fr.sg.fmk.service.GenericSearchService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,7 +31,7 @@ public abstract class ServerListController<T extends GenericDomain> extends Basi
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public DatatablesResponse<T> listAll(@DatatablesParams DatatablesCriterias criterias) {
+    public DatatablesResponse<T> paginateAndSort(@DatatablesParams DatatablesCriterias criterias) {
         Page<T> page = getGenericSearchService().paginateAndSort(criterias);
         List<T> list = new ArrayList<T>();
         for (T t : page.getContent()) {

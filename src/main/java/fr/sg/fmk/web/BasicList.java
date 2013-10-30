@@ -19,11 +19,11 @@ import java.lang.reflect.ParameterizedType;
 
 /**
  * Classe apportant les méthodes basiques aux contrôleurs gérant les listes du framework.
- * Cette classe est package local car elle n'a pas vocation à être étendue.
+ * Cette classe n'a pas vocation a être étendue par les développeurs.
  *
  * @author jntakpe
  */
-abstract class BasicList<T extends GenericDomain> {
+public abstract class BasicList<T extends GenericDomain> {
     /**
      * Encapsulation des appels aux loggers
      */

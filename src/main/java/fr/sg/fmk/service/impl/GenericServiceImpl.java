@@ -4,10 +4,10 @@ import fr.sg.fmk.domain.GenericDomain;
 import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
 import fr.sg.fmk.exception.BusinessException;
+import fr.sg.fmk.repository.FmkRepository;
 import fr.sg.fmk.service.GenericService;
 import fr.sg.fmk.service.MessageManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
      *
      * @return le repository à utiliser
      */
-    public abstract JpaRepository<T, Long> getRepository();
+    public abstract FmkRepository<T> getRepository();
 
     /**
      * {@inheritDoc}
