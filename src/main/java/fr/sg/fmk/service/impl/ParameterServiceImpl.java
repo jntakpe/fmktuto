@@ -6,6 +6,7 @@ import fr.sg.fmk.domain.Parameter;
 import fr.sg.fmk.repository.ParameterRepository;
 import fr.sg.fmk.service.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see GenericServiceImpl
  */
 @Service
-public final class ParameterServiceImpl extends GenericServiceImpl<Parameter> implements ParameterService {
+public class ParameterServiceImpl extends GenericServiceImpl<Parameter> implements ParameterService {
 
     /**
      * Encapsulation des appels aux loggers
@@ -29,7 +30,7 @@ public final class ParameterServiceImpl extends GenericServiceImpl<Parameter> im
      * {@inheritDoc}
      */
     @Override
-    public CrudRepository<Parameter, Long> getRepository() {
+    public JpaRepository<Parameter, Long> getRepository() {
         return parameterRepository;
     }
 

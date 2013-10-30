@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author jntakpe
  */
 @Controller
-public final class FmkController {
+public class FmkController {
 
     /**
      * Rôle minimum pour authentifier un utilisateur

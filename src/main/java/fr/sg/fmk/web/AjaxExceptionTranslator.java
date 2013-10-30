@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @Order(Integer.MAX_VALUE)
-public final class AjaxExceptionTranslator {
+public class AjaxExceptionTranslator {
 
     /**
      * Méthode interceptant les exceptions lancées par la couche web. Dans le cas d'un appel AJAX avec renvoi d'un

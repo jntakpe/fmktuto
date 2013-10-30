@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author jntakpe
  */
 @ControllerAdvice
-public final class ExceptionController {
+public class ExceptionController {
 
     /**
      * Capte les exceptions framework non gérées par la couche web, reviens à la page précédente et transmet l'erreur

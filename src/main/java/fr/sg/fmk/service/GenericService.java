@@ -78,8 +78,6 @@ public interface GenericService<T extends GenericDomain> {
      */
     boolean isAvaillable(Unicity unicity);
 
-    Pageable buildPageRequest(DatatablesCriterias dc);
-
     /**
      * Créé une exception métier
      *

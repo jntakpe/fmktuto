@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @author jntakpe
  */
 @Service
-public final class AuthenticationListener implements ApplicationListener<AuthenticationSuccessEvent> {
+public class AuthenticationListener implements ApplicationListener<AuthenticationSuccessEvent> {
 
     /**
      * Encapsulation des appels aux loggers
