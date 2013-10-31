@@ -2,12 +2,9 @@ package fr.sg.fmk.web;
 
 
 import fr.sg.fmk.exception.AjaxException;
-import fr.sg.fmk.exception.FrameworkException;
+import fr.sg.fmk.exception.FmkException;
 import fr.sg.fmk.util.FmkUtils;
 import fr.sg.fmk.dto.ResponseMessage;
-import fr.sg.fmk.exception.AjaxException;
-import fr.sg.fmk.exception.FrameworkException;
-import fr.sg.fmk.util.FmkUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,12 +30,12 @@ public class ExceptionController {
     /**
      * Capte les exceptions framework non gérées par la couche web, reviens à la page précédente et transmet l'erreur
      *
-     * @param e exception du type FrameworkException
+     * @param e exception du type FmkException
      * @return la page précédente avec l'erreur
      */
-    @ExceptionHandler(FrameworkException.class)
+    @ExceptionHandler(FmkException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ModelAndView handleFmkException(FrameworkException e, HttpServletRequest request) {
+    public ModelAndView handleFmkException(FmkException e, HttpServletRequest request) {
         FlashMap map = RequestContextUtils.getOutputFlashMap(request);
         map.put("responseMessage", ResponseMessage.getErrorMessage(e));
         String referer = request.getHeader("referer");

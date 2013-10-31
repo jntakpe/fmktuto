@@ -5,7 +5,7 @@ package fr.sg.fmk.exception;
  *
  * @author jntakpe
  */
-public final class TechException extends FrameworkException {
+public final class TechException extends FmkException {
 
     /**
      * Constructeur d'exception techniques

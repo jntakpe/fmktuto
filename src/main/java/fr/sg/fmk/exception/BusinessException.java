@@ -6,7 +6,7 @@ package fr.sg.fmk.exception;
  *
  * @author jntakpe
  */
-public final class BusinessException extends FrameworkException {
+public final class BusinessException extends FmkException {
 
     /**
      * Constructeur d'exception métier

@@ -5,7 +5,7 @@ package fr.sg.fmk.exception;
  *
  * @author jntakpe
  */
-public abstract class FrameworkException extends RuntimeException {
+public abstract class FmkException extends RuntimeException {
 
     /**
      * Code erreur du framework
@@ -19,7 +19,7 @@ public abstract class FrameworkException extends RuntimeException {
      * @param message   message de l'exception
      * @param errorCode code d'erreur
      */
-    protected FrameworkException(String message, ErrorCode errorCode) {
+    protected FmkException(String message, ErrorCode errorCode) {
         super(message);
         this.errorCode = errorCode;
     }
@@ -32,7 +32,7 @@ public abstract class FrameworkException extends RuntimeException {
      * @param message   message de l'exception
      * @param errorCode code d'erreur
      */
-    protected FrameworkException(Exception e, String message, ErrorCode errorCode) {
+    protected FmkException(Exception e, String message, ErrorCode errorCode) {
         super(message, e.getCause());
         this.errorCode = errorCode;
     }
