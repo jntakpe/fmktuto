@@ -1,7 +1,7 @@
 package fr.sg.fmk.service;
 
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
 import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.DatatablesRequest;
 import org.springframework.data.domain.Page;
 
 /**
@@ -12,5 +12,5 @@ import org.springframework.data.domain.Page;
  */
 public interface GenericSearchService<T extends GenericDomain> extends GenericService<T> {
 
-    Page<T> paginateAndSort(DatatablesCriterias criterias);
+    Page<T> paginateAndSort(DatatablesRequest dr);
 }

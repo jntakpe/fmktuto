@@ -1,11 +1,9 @@
 package fr.sg.fmk.service;
 
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
 import fr.sg.fmk.domain.GenericDomain;
 import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
 import fr.sg.fmk.exception.BusinessException;
-import org.springframework.data.domain.Pageable;
 
 /**
  * Interface fournissant les services usuels

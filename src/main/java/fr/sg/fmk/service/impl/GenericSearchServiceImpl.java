@@ -1,8 +1,8 @@
 package fr.sg.fmk.service.impl;
 
-import com.github.dandelion.datatables.core.ajax.ColumnDef;
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
 import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.ColumnProp;
+import fr.sg.fmk.dto.DatatablesRequest;
 import fr.sg.fmk.service.GenericSearchService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,41 +21,33 @@ public abstract class GenericSearchServiceImpl<T extends GenericDomain> extends 
         implements GenericSearchService<T> {
 
     @Override
-    public Page<T> paginateAndSort(DatatablesCriterias criterias) {
-        return getRepository().findAll(buildPageRequest(criterias));
+    public Page<T> paginateAndSort(DatatablesRequest dr) {
+        return getRepository().findAll(buildPageRequest(dr));
     }
 
     /**
      * Construit un objet gérant utilisé pour faire une requête de pagination et de tri
      *
-     * @param dc état de la liste DataTables
+     * @param dr état de la liste DataTables
      * @return Objet contenant les informations de pagination
      */
-    private Pageable buildPageRequest(DatatablesCriterias dc) {
-        int pageNumber = dc.getDisplayStart() / dc.getDisplaySize();
-        int size = dc.getDisplaySize();
-        if (dc.hasOneSortedColumn()) return new PageRequest(pageNumber, size, resolveSort(dc.getSortingColumnDefs()));
+    private Pageable buildPageRequest(DatatablesRequest dr) {
+        int pageNumber = dr.getDisplayStart() / dr.getDisplaySize();
+        int size = dr.getDisplaySize();
+        if (dr.hasSortedColumn()) return new PageRequest(pageNumber, size, resolveSort(dr.getColumnProps()));
         else return new PageRequest(pageNumber, size);
     }
 
     /**
      * Renvoi un objet contenant les propriétés de tri des colonnes
      *
-     * @param columnDefs propriétés de chaque colonne
+     * @param columnProps propriétés de chaque colonne
      * @return propriétés de tri des colonnes
      */
-    private Sort resolveSort(List<ColumnDef> columnDefs) {
+    private Sort resolveSort(List<ColumnProp> columnProps) {
         List<Sort.Order> orders = new ArrayList<Sort.Order>();
-        for (ColumnDef columnDef : columnDefs) {
-            if (columnDef.isSortable()) {
-                Sort.Direction direction;
-                if (columnDef.getSortDirection().equals(ColumnDef.SortDirection.ASC))
-                    direction = Sort.Direction.ASC;
-                else
-                    direction = Sort.Direction.DESC;
-                orders.add(new Sort.Order(direction, columnDef.getName()));
-            }
-        }
+        for (ColumnProp columnProp : columnProps)
+            if (columnProp.isSorted()) orders.add(new Sort.Order(columnProp.getSortDirection(), columnProp.getName()));
         return new Sort(orders);
     }
 }

@@ -292,12 +292,11 @@ $.fn.dataTableExt.oApi.fnGetColumnData = function (oSettings, iColumn, bUnique, 
     else aiRows = oSettings.aiDisplayMaster; // all row numbers
 
     // set up data array
-    var asResultData = new Array();
+    var asResultData = [];
 
     for (var i = 0, c = aiRows.length; i < c; i++) {
         iRow = aiRows[i];
         var sValue = this.fnGetData(iRow, iColumn);
-
         // ignore empty values?
         if (bIgnoreEmpty == true && sValue.length == 0) continue;
 
@@ -309,4 +308,19 @@ $.fn.dataTableExt.oApi.fnGetColumnData = function (oSettings, iColumn, bUnique, 
     }
 
     return asResultData;
+};
+
+/** Multiple filtres en une requête */
+$.fn.dataTableExt.oApi.fnMultiFilter = function (oSettings, oData) {
+    for (var key in oData) {
+        if (oData.hasOwnProperty(key)) {
+            for (var i = 0, iLen = oSettings.aoColumns.length; i < iLen; i++) {
+                if (oSettings.aoColumns[i].mData === key) {
+                    oSettings.aoPreSearchCols[ i ].sSearch = oData[key];
+                    break;
+                }
+            }
+        }
+    }
+    this.oApi._fnReDraw(oSettings);
 };

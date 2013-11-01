@@ -15,14 +15,13 @@
 
     <context:component-scan base-package="fr.sg.fmk.web, fr.sg.tuto.web"/>
 
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <mvc:default-servlet-handler/>
 
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
-            <bean class="com.github.dandelion.datatables.extras.spring3.ajax.DatatablesCriteriasMethodArgumentResolver">
-            </bean>
+            <bean class="fr.sg.fmk.service.impl.DatatablesRequestResolver" />
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 

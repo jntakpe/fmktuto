@@ -441,7 +441,7 @@ var fmk = {
      * @param $event évennement
      * @param [tableId] identifiant de la table
      */
-    displayCreatePopup : function ($event, tableId){
+    displayCreatePopup: function ($event, tableId) {
         "use strict";
         var $table, $popup, $newTitle, $editTitle;
         if (tableId) {
@@ -531,7 +531,36 @@ var fmk = {
 
 $(function () {
     "use strict";
-    var $alert = $('#alert'), $wrapTable = $('table.wrap'), $searchFormClient = $('.search-form.client');
+    var $alert = $('#alert'), $wrapTable = $('table.wrap'), $autoSearch = $('.auto-search');
+
+    /**
+     * Gestion des recherches
+     */
+    function searchHandler() {
+        var dataTable, tableId, $dt, $search = $(this).closest('.auto-search'), name = $(this).attr('name'), settings;
+        if (!name) {
+            throw "Impossible d'effectuer une recherche si l'attribut name de l'input n'est pas renseigné";
+        }
+        tableId = $search.data('table-id');
+        if (!tableId) { //Si le développeur n'a pas spécifié sur quelle table la recherche doit être effectuée
+            $dt = $('table[id^=dt_]');
+            if ($dt.length !== 1) {
+                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée";
+            }
+            tableId = $dt.attr('id');
+        }
+        dataTable = $('#' + tableId).data('dt'); // Récupération de la dataTable
+        if (!dataTable) {
+            throw "DataTable introuvable. Aucune DataTable pour l'id : '" + tableId + "'.";
+        }
+        settings = dataTable.fnSettings();
+        for (var i = 0, iLen = settings.aoColumns.length; i < iLen; i++) {
+            if (settings.aoColumns[i].mData == name) {
+                dataTable.fnFilter($(this).val(), i);
+                break;
+            }
+        }
+    }
 
     //Display les alertes déjà initialisées
     if ($alert.hasClass('alert-success')) {
@@ -543,7 +572,6 @@ $(function () {
     if ($alert.hasClass('alert-danger')) {
         $alert.addClass('in');
     }
-
 
     //Ajoute la classe 'wrap-cell' sur les cellules qui sont wrappées
     $wrapTable.on('mouseenter', 'td', function (e) {
@@ -563,31 +591,16 @@ $(function () {
         }
     });
 
-    //Recherche en mode client (type:text)
-    $searchFormClient.find('input').keyup(function () {
-        var dataTable, tableId, $dt, $form = $(this).closest('form'), idx = $(this).data('idx');
-        tableId = $form.data('table-id');
-        if (!tableId) { //Si le développeur n'a pas spécifié sur quelle table la recherche doit être effectuée
-            $dt = $('table[id^=dt_]');
-            if ($dt.length !== 1) {
-                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée";
-            }
-            tableId = $dt.attr('id');
-        }
-        dataTable = $('#' + tableId).data('dt'); // Récupération de la dataTable
-        if (!dataTable) {
-            throw "DataTable introuvable. Aucune DataTable pour l'id : '" + tableId + "'.";
-        }
-        if (idx === undefined) {
-            idx = $('.search-form.client').find(':input').index(this);
-        }
-        dataTable.fnFilter($(this).val(), idx);
-    });
+    //Lance la recherche sur keyup de champ texte
+    $autoSearch.find('input').keyup(searchHandler);
 
-    //Recherche en mode client (type:select)
-    $searchFormClient.find('select').change(function () {
-        var dataTable, tableId, $dt, $form = $(this).closest('form'), idx = $(this).data('idx');
-        tableId = $form.data('table-id');
+    //Lance la recherche sur modification de select
+    $autoSearch.find('select').change(searchHandler);
+
+    //Recherche après click sur bouton
+    $('.click-search').find('.trigger-search').click(function () {
+        var dataTable, tableId, $dt, $search = $(this).closest('.click-search'), searchData = {};
+        tableId = $search.data('table-id');
         if (!tableId) { //Si le développeur n'a pas spécifié sur quelle table la recherche doit être effectuée
             $dt = $('table[id^=dt_]');
             if ($dt.length !== 1) {
@@ -599,10 +612,14 @@ $(function () {
         if (!dataTable) {
             throw "DataTable introuvable. Aucune DataTable pour l'id : '" + tableId + "'.";
         }
-        if (idx === undefined) {
-            idx = $('.search-form.client').find(':input').index(this);
-        }
-        dataTable.fnFilter($(this).val(), idx);
+        $search.find('input , select').each(function () {
+            var name = $(this).attr('name'), val = $(this).val();
+            if (!name) {
+                throw "Impossible d'effectuer une recherche si l'attribut name de l'input n'est pas renseigné";
+            }
+            searchData[name] = val;
+        });
+        dataTable.fnMultiFilter(searchData);
     });
 
     //Fermeture des alertes après click sur 'close'

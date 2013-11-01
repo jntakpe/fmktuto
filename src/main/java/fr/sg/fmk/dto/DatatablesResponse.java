@@ -1,6 +1,7 @@
 package fr.sg.fmk.dto;
 
 import fr.sg.fmk.domain.GenericDomain;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -9,58 +10,54 @@ import java.util.List;
  *
  * @author jntakpe
  */
-public class DatatablesResponse<T extends GenericDomain> {
+public final class DatatablesResponse<T extends GenericDomain> {
 
     /**
      * Contenu de la table à afficher
      */
-    private List<T> aaData;
+    private final List<T> aaData;
 
     /**
      * Nombre total d'enregistrements sur une page (enregistrements filtrés)
      */
-    private Long iTotalRecords;
+    private final Integer iTotalRecords;
 
     /**
      * Nombre total d'enregistrements (total de toutes les pages)
      */
-    private Long iTotalDisplayRecords;
+    private final Long iTotalDisplayRecords;
 
     /**
      * Compteur d'appel au serveur
      */
-    private Integer sEcho;
+    private final Integer sEcho;
+
+    /**
+     * Constructeur
+     * @param page objet contenant les informations sur la page à afficher
+     * @param sEcho compteur d'appel au serveur
+     */
+    public DatatablesResponse(Page page, Integer sEcho) {
+        this.aaData = page.getContent();
+        this.iTotalRecords = page.getNumberOfElements();
+        this.iTotalDisplayRecords = page.getTotalElements();
+        this.sEcho = sEcho;
+    }
 
     public List<T> getAaData() {
         return aaData;
     }
 
-    public void setAaData(List<T> aaData) {
-        this.aaData = aaData;
-    }
-
-    public Long getiTotalRecords() {
+    public Integer getiTotalRecords() {
         return iTotalRecords;
-    }
-
-    public void setiTotalRecords(Long iTotalRecords) {
-        this.iTotalRecords = iTotalRecords;
     }
 
     public Long getiTotalDisplayRecords() {
         return iTotalDisplayRecords;
     }
 
-    public void setiTotalDisplayRecords(Long iTotalDisplayRecords) {
-        this.iTotalDisplayRecords = iTotalDisplayRecords;
-    }
-
     public Integer getsEcho() {
         return sEcho;
-    }
-
-    public void setsEcho(Integer sEcho) {
-        this.sEcho = sEcho;
     }
 
     @Override
