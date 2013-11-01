@@ -1,6 +1,8 @@
 package fr.sg.fmk.service.impl;
 
 import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.ColumnProp;
+import fr.sg.fmk.dto.DatatablesRequest;
 import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
 import fr.sg.fmk.exception.BusinessException;
@@ -8,6 +10,10 @@ import fr.sg.fmk.repository.FmkRepository;
 import fr.sg.fmk.service.GenericService;
 import fr.sg.fmk.service.MessageManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +22,8 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -64,6 +72,14 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     @Transactional(readOnly = true)
     public Iterable<T> findAll() {
         return getRepository().findAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<T> page(DatatablesRequest datatablesRequest) {
+        return getRepository().findAll(buildPageRequest(datatablesRequest));
     }
 
     /**
@@ -139,6 +155,32 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     private Class<T> getDomainClass() {
         ParameterizedType genericSuperclass = ((ParameterizedType) this.getClass().getGenericSuperclass());
         return (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+    }
+
+    /**
+     * Construit un objet utilisé pour faire une requête de pagination et de tri
+     *
+     * @param dr état de la liste DataTables
+     * @return Objet contenant les informations de pagination
+     */
+    private Pageable buildPageRequest(DatatablesRequest dr) {
+        int pageNumber = dr.getDisplayStart() / dr.getDisplaySize();
+        int size = dr.getDisplaySize();
+        if (dr.hasSortedColumn()) return new PageRequest(pageNumber, size, resolveSort(dr.getColumnProps()));
+        else return new PageRequest(pageNumber, size);
+    }
+
+    /**
+     * Renvoi un objet contenant les propriétés de tri des colonnes
+     *
+     * @param columnProps propriétés de chaque colonne
+     * @return propriétés de tri des colonnes
+     */
+    private Sort resolveSort(List<ColumnProp> columnProps) {
+        List<Sort.Order> orders = new ArrayList<Sort.Order>();
+        for (ColumnProp columnProp : columnProps)
+            if (columnProp.isSorted()) orders.add(new Sort.Order(columnProp.getSortDirection(), columnProp.getName()));
+        return new Sort(orders);
     }
 
 }

@@ -86,8 +86,6 @@ var fmk = {
                     } else {
                         fmk.displayError(response);
                     }
-                }).fail(function (xhr) {
-                    fmk.displayError(xhr['responseJSON']);
                 });
         }
         result = sessionStorage.getItem(code); //Récupération du paramètre
@@ -212,6 +210,9 @@ var fmk = {
         var $popup, dataTable, $popupForm, $popupSubmit, $table = $('#' + id);
         if (!$table.length) {
             throw "L'identifiant de la table est incorrect";
+        }
+        if (dtOptions.bServerSide && !dtOptions.sAjaxDataProp) {
+            dtOptions.sAjaxDataProp = "aaData"; //En cas de server-side, on wrap les données dans le champ aaData
         }
         dataTable = $table.dataTable(dtOptions); //Création de la dataTables
         $popup = $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId));
@@ -347,9 +348,6 @@ var fmk = {
                     fmk.displayError(response);
                 }
 
-            }).fail(function (xhr) {
-                $("#confirmDeletePopup").modal('hide');
-                fmk.displayError(xhr['responseJSON']);
             });
         //Stockage des infos relatives à la ligne ayant déclenché l'événement
         $table.data("rowInfos", new RowInfos(id, $event.closest('tr')[0]));
@@ -385,12 +383,6 @@ var fmk = {
                         dataTable.fnReloadAjax();
                     }
                 }
-            ).fail(
-                function (xhr) {
-                    $('#confirmDeletePopup').modal('hide');
-                    fmk.displayError(xhr['responseJSON']);
-                    dataTable.fnReloadAjax();
-                }
             );
         } else { //Appel non-AJAX
             window.location = uri + "/delete";
@@ -420,19 +412,8 @@ var fmk = {
             url: uri,
             contentType: "application/json"
         }).done(function (response) {
-                if (response.success) {
-                    fmk.populateForm($popup.find('form'), response.data);
-                    $table.data('rowInfos', new RowInfos(id, $event.closest('tr')[0]));
-                } else {
-                    fmk.displayError(response);
-                    $table.fnReloadAjax();
-                    $popup.modal('hide');
-                }
-            })
-            .error(function (xhr) {
-                $table.fnReloadAjax();
-                fmk.displayError(xhr['responseJSON']);
-                $popup.modal('hide');
+                fmk.populateForm($popup.find('form'), response);
+                $table.data('rowInfos', new RowInfos(id, $event.closest('tr')[0]));
             });
     },
 
@@ -496,11 +477,6 @@ var fmk = {
                     } else {
                         fmk.displayError(response);
                     }
-                },
-                error: function (xhr) {
-                    $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId)).modal('hide');
-                    fmk.displayError(xhr['responseJSON']);
-                    dataTable.fnReloadAjax();
                 }
             });
         } else { //Envoi du formulaire non-AJAX => rechargement complet de la page
@@ -631,7 +607,14 @@ $(function () {
     $('.modal.edit-popup').on('hide.bs.modal', function () {
         var $form = $(this).find('form');
         $form.data('validForm').resetForm(); //Nettoie le formulaire au niveau validation
-        $form.find('.has-error').removeClass('has-error'); //Enlève les input en erreur
+        $form.find('.has-error').removeClass('has-error'); //Enlève les inputs en erreur
         $form.find(":hidden").val('');
     });
+
+    //Gestion des erreurs centralisée
+    $(document).ajaxError(function (event, xhr) {
+        fmk.displayError(xhr['responseJSON']);
+        $('.modal').hide();
+    });
+
 });

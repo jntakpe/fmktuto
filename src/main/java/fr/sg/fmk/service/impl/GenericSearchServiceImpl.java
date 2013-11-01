@@ -26,7 +26,7 @@ public abstract class GenericSearchServiceImpl<T extends GenericDomain> extends 
     }
 
     /**
-     * Construit un objet gérant utilisé pour faire une requête de pagination et de tri
+     * Construit un objet utilisé pour faire une requête de pagination et de tri
      *
      * @param dr état de la liste DataTables
      * @return Objet contenant les informations de pagination

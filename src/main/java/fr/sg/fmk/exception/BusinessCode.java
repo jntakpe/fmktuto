@@ -14,5 +14,10 @@ public enum BusinessCode implements ErrorCode {
     /**
      * Exception lancée si le champ donné est introuvable est introuvable sur l'entité
      */
-    ENTITY_FIELD_MISSING
+    ENTITY_FIELD_MISSING,
+
+    /**
+     * Exception levée lorsque l'identifiant recherché n'est associé à aucune entité
+     */
+    ENTITY_NOT_FOUND
 }

@@ -36,6 +36,7 @@ public class ExceptionController {
     @ExceptionHandler(FmkException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView handleFmkException(FmkException e, HttpServletRequest request) {
+        e.printStackTrace();
         FlashMap map = RequestContextUtils.getOutputFlashMap(request);
         map.put("responseMessage", ResponseMessage.getErrorMessage(e));
         String referer = request.getHeader("referer");
@@ -53,6 +54,7 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ResponseMessage handleAjaxException(AjaxException e) {
+        e.printStackTrace();
         Throwable cause = e.getCause();
         return ResponseMessage.getErrorMessage(cause.getMessage(), cause.getStackTrace());
     }
@@ -66,6 +68,7 @@ public class ExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView handleUnknownException(Exception e, HttpServletRequest request) {
+        e.printStackTrace();
         FlashMap map = RequestContextUtils.getOutputFlashMap(request);
         map.put("exception", e);
         return new ModelAndView(new RedirectView(FmkUtils.ERROR_VIEW, true));

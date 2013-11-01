@@ -1,9 +1,12 @@
 package fr.sg.fmk.web;
 
-
 import fr.sg.fmk.constant.LogLevel;
 import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.DatatablesRequest;
+import fr.sg.fmk.dto.DatatablesResponse;
 import fr.sg.fmk.dto.ResponseMessage;
+import fr.sg.fmk.exception.BusinessCode;
+import fr.sg.fmk.service.DatatablesParams;
 import fr.sg.fmk.service.GenericService;
 import fr.sg.fmk.service.MessageManager;
 import fr.sg.fmk.util.FmkUtils;
@@ -14,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -27,20 +29,8 @@ import java.lang.reflect.ParameterizedType;
 public abstract class GenericController<T extends GenericDomain> {
 
     /**
-     * Suffixe des vues de type liste
+     * Encapsulation des appels aux loggers
      */
-    public static final String SUFFIXE_PAGE_HTML_LIST = "_list";
-
-    /**
-     * Suffixe des vues de type detail
-     */
-    public static final String SUFFIXE_PAGE_HTML_DETAIL = "_form";
-
-    /**
-     * URI pour les méthodes de contrôles
-     */
-    public static final String CONTROL_URI = "/control";
-
     @Autowired
     protected MessageManager messageManager;
 
@@ -54,50 +44,35 @@ public abstract class GenericController<T extends GenericDomain> {
     /**
      * Affiche la page liste
      *
-     * @return le nom de la page à afficher
+     * @return le chemin de la page à afficher. Pour modifier le nom de la vue de la liste à afficher,
+     *         veuillez utiliser {@link fr.sg.fmk.web.GenericController#getListViewPath()}
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView display() {
-        return new ModelAndView(constructNomPageHTMLList());
+        return new ModelAndView(getListViewPath());
     }
 
     /**
-     * Renvoi les données de la liste à afficher
+     * Renvoi toutes les données d'une table. Datatables gère ensuite le filtrage, le tri et la pagination.
      *
      * @return entités à afficher
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public Iterable<T> listAll() {
+    public Iterable<T> list() {
         return getService().findAll();
     }
 
     /**
-     * Affiche l'écran détail de création d'un nouveau élément
+     * Renvoi les données déjà filtrées, triées et paginées en fonction des paramètres Datatables
      *
-     * @return page détail
+     * @param datatablesRequest état de la liste DataTables
+     * @return entités filtrées, triées et paginées à afficher
      */
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public ModelAndView detail() throws Exception {
-        ModelAndView mv = new ModelAndView(constructNomPageHTMLDetail());
-        return mv.addObject("domain", getDomainClass().newInstance()).addObject("saveUri", constructNomPageHTMLList());
-    }
-
-    /**
-     * Affiche l'écran détail correspondant à l'élément possédant cette id
-     *
-     * @param id identifiant de l'élément à afficher
-     * @return page détail
-     */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView detail(@PathVariable Long id) {
-        ModelAndView mv = new ModelAndView(constructNomPageHTMLDetail());
-        T domain = getService().findOne(id);
-        if (domain == null) {
-            mv.setViewName(constructNomPageHTMLList());
-            return mv.addObject(ResponseMessage.getErrorMessage(messageManager.getMessage("access.notexist")));
-        }
-        return mv.addObject("domain", domain).addObject("saveUri", constructNomPageHTMLList());
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    @ResponseBody
+    public DatatablesResponse<T> page(@DatatablesParams DatatablesRequest datatablesRequest) {
+        return new DatatablesResponse<T>(getService().page(datatablesRequest), datatablesRequest.getCallCounter());
     }
 
     /**
@@ -108,10 +83,34 @@ public abstract class GenericController<T extends GenericDomain> {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseMessage populate(@PathVariable Long id) {
+    public T populate(@PathVariable Long id) {
         T domain = getService().findOne(id);
-        if (domain == null) return ResponseMessage.getErrorMessage(messageManager.getMessage("access.notexist"));
-        return ResponseMessage.getSuccessMessage(domain);
+        if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
+        return domain;
+    }
+
+    /**
+     * Affiche l'écran détail de création d'un nouveau élément
+     *
+     * @return page détail
+     */
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    public ModelAndView detail() throws Exception {
+        return new ModelAndView(getDetailViewPath()).addObject("domain", getDomainClass().newInstance());
+    }
+
+    /**
+     * Affiche l'écran détail correspondant à l'élément possédant cette id
+     *
+     * @param id identifiant de l'élément à afficher
+     * @return page détail
+     */
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView(getDetailViewPath());
+        T domain = getService().findOne(id);
+        if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
+        return mv.addObject("domain", domain);
     }
 
     /**
@@ -150,17 +149,17 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Supprime l'élément possédant l'id de la liste
+     * Supprime l'entité correspondante à l'identifiant lors d'un appel non-AJAX.
+     * La page sera donc rechargée à l'issue de la suppression de l'entité.
      *
-     * @param id identifiant de l'élément à supprimer
+     * @param id identifiant de l'entité à supprimer
      * @return page à afficher
      */
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView(getRedirectListView());
         T domain = getService().findOne(id);
-        if (domain == null)
-            return mv.addObject(ResponseMessage.getErrorMessage(messageManager.getMessage("access.notexist", id)));
+        if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
         getService().delete(domain);
         messageManager.logMessage("MSG00003", LogLevel.INFO, FmkUtils.getCurrentUsername(), domain);
         String msg = messageManager.getMessage("delete.success", domain);
@@ -169,16 +168,18 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Supprime l'élément possédant l'id de la liste lors d'un appel AJAX
+     * Supprime l'entité correspondante à l'identifiant lors d'un appel AJAX.
+     * L'entité sera supprimée côté serveur (Database).
+     * Le client(JavaScript) se chargera de la suppression de l'entité dans la table.
      *
      * @param id identifiant de l'élément à supprimer
      * @return message indiquant le résultat de la suppression
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseMessage ajaxDelete(@PathVariable Long id) {
+    public ResponseMessage delete(@PathVariable Long id) {
         T domain = getService().findOne(id);
-        if (domain == null) return ResponseMessage.getErrorMessage(messageManager.getMessage("access.notexist", id));
+        if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
         getService().delete(domain);
         messageManager.logMessage("MSG00003", LogLevel.INFO, FmkUtils.getCurrentUsername(), domain);
         return ResponseMessage.getSuccessMessage(messageManager.getMessage("delete.success", domain));
@@ -192,28 +193,30 @@ public abstract class GenericController<T extends GenericDomain> {
      */
     @RequestMapping(value = "/{id}/message", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseMessage deleteMsg(@PathVariable Long id) {
+    public ResponseMessage displayConfirmMsg(@PathVariable Long id) {
         T domain = getService().findOne(id);
-        if (domain == null) return ResponseMessage.getErrorMessage(messageManager.getMessage("access.notexist", id));
+        if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
         return ResponseMessage.getSuccessMessage(messageManager.getMessage("popup.confirm.delete.msg", domain));
     }
 
     /**
-     * Méthode permettant de récupérer le nom de la page à afficher.
+     * Récupère le nom de la vue de la liste à afficher.
+     * A surcharger si le nom de la vue est différent de 'lists/' + NOM_ENTITE + '_list'.
      *
-     * @return le nom de la page
+     * @return le nom de la vue à afficher
      */
-    protected String pageName() {
-        return getDomainClass().getSimpleName().toLowerCase();
+    public String getListViewPath() {
+        return "lists/" + getDomainClass().getSimpleName().toLowerCase() + "_list";
     }
 
     /**
-     * Renvoi la base de l'url correspondant à la valeur du request mapping
+     * Récupère le chemin de la vue du détail à afficher.
+     * A surcharger si le chemin de la vue est différent de 'details/' + NOM_ENTITE + '_detail'.
      *
-     * @return valeur du request mapping
+     * @return le nom de la vue à afficher
      */
-    protected String baseUri() {
-        return this.getClass().getAnnotation(RequestMapping.class).value()[0];
+    public String getDetailViewPath() {
+        return "details/" + getDomainClass().getSimpleName().toLowerCase() + "_detail";
     }
 
     /**
@@ -221,8 +224,8 @@ public abstract class GenericController<T extends GenericDomain> {
      *
      * @return page liste
      */
-    private RedirectView getRedirectListView() {
-        String baseUri = baseUri();
+    protected final RedirectView getRedirectListView() {
+        String baseUri = this.getClass().getAnnotation(RequestMapping.class).value()[0];
         if (baseUri.charAt(0) != '/') baseUri = "/" + baseUri;
         return new RedirectView(baseUri, true);
     }
@@ -232,25 +235,7 @@ public abstract class GenericController<T extends GenericDomain> {
      *
      * @return ressource utilisée par le contrôlleur
      */
-    private Class<T> getDomainClass() {
+    protected final Class<T> getDomainClass() {
         return (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
-
-    /**
-     * Construit le nom standard d'une page HTML liste.
-     *
-     * @return nom de la vue à afficher
-     */
-    private String constructNomPageHTMLList() {
-        return pageName() + SUFFIXE_PAGE_HTML_LIST;
-    }
-
-    /**
-     * Construit le nom standard d'une page HTML détail.
-     *
-     * @return nom de la vue à afficher
-     */
-    private String constructNomPageHTMLDetail() {
-        return pageName() + SUFFIXE_PAGE_HTML_DETAIL;
     }
 }

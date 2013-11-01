@@ -1,9 +1,11 @@
 package fr.sg.fmk.service;
 
 import fr.sg.fmk.domain.GenericDomain;
+import fr.sg.fmk.dto.DatatablesRequest;
 import fr.sg.fmk.dto.Unicity;
 import fr.sg.fmk.exception.BusinessCode;
 import fr.sg.fmk.exception.BusinessException;
+import org.springframework.data.domain.Page;
 
 /**
  * Interface fournissant les services usuels
@@ -34,6 +36,15 @@ public interface GenericService<T extends GenericDomain> {
      * @return entités de la table
      */
     Iterable<T> findAll();
+
+    /**
+     * Renvoi uniquement les données à afficher dans une page.
+     * Filtre, tri et pagine les données.
+     *
+     * @param datatablesRequest état de la liste DataTables
+     * @return les informations nécessaires à l'affichage de la page
+     */
+    Page<T> page(DatatablesRequest datatablesRequest);
 
     /**
      * Indique si l'entité existe en table

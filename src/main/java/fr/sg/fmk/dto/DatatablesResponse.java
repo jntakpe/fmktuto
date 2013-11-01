@@ -37,7 +37,7 @@ public final class DatatablesResponse<T extends GenericDomain> {
      * @param page objet contenant les informations sur la page à afficher
      * @param sEcho compteur d'appel au serveur
      */
-    public DatatablesResponse(Page page, Integer sEcho) {
+    public DatatablesResponse(Page<T> page, Integer sEcho) {
         this.aaData = page.getContent();
         this.iTotalRecords = page.getNumberOfElements();
         this.iTotalDisplayRecords = page.getTotalElements();
