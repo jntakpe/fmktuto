@@ -1,10 +1,12 @@
 package fr.sg.fmk.web;
 
 
+import fr.sg.fmk.dto.ResponseMessage;
 import fr.sg.fmk.exception.AjaxException;
 import fr.sg.fmk.exception.FmkException;
+import fr.sg.fmk.service.MessageManager;
 import fr.sg.fmk.util.FmkUtils;
-import fr.sg.fmk.dto.ResponseMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ControllerAdvice
 public class ExceptionController {
+
+    @Autowired
+    private MessageManager messageManager;
 
     /**
      * Capte les exceptions framework non gérées par la couche web, reviens à la page précédente et transmet l'erreur
@@ -56,7 +61,9 @@ public class ExceptionController {
     public ResponseMessage handleAjaxException(AjaxException e) {
         e.printStackTrace();
         Throwable cause = e.getCause();
-        return ResponseMessage.getErrorMessage(cause.getMessage(), cause.getStackTrace());
+        if (e.getCause() instanceof FmkException)
+            return ResponseMessage.getErrorMessage(cause.getMessage(), cause.getStackTrace());
+        return ResponseMessage.getErrorMessage(messageManager.getMessage("unknown.error"));
     }
 
     /**

@@ -1,5 +1,8 @@
 package fr.sg.fmk.service.impl;
 
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.types.Predicate;
+import com.mysema.query.types.path.PathBuilder;
 import fr.sg.fmk.domain.GenericDomain;
 import fr.sg.fmk.dto.ColumnProp;
 import fr.sg.fmk.dto.DatatablesRequest;
@@ -9,6 +12,7 @@ import fr.sg.fmk.exception.BusinessException;
 import fr.sg.fmk.repository.FmkRepository;
 import fr.sg.fmk.service.GenericService;
 import fr.sg.fmk.service.MessageManager;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -79,7 +83,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
      */
     @Override
     public Page<T> page(DatatablesRequest datatablesRequest) {
-        return getRepository().findAll(buildPageRequest(datatablesRequest));
+        return getRepository().findAll(buildFilterQuery(datatablesRequest), buildPageRequest(datatablesRequest));
     }
 
     /**
@@ -147,21 +151,34 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
         return new BusinessException(messageManager.getMessage(code, errorParams), code);
     }
 
+
     /**
-     * Méthode renvoyant l'entité de la couche domain/model
+     * Construit un prédicat de filtrage l'aide des paramètres envoyés par DataTables.
+     * Par défaut recherche pour chaque champ de recherche renseigné une requête de type :
+     * SELECT * FROM table WHERE UPPER(champ1) LIKE('%' + valeur1 + '%') AND UPPER(champ2) LIKE('%' + valeur2 + '%').
+     * Doit être étendue si la recherche par défaut ne convient pas.
      *
-     * @return ressource utilisée par le contrôlleur
+     * @param datatablesRequest état de la liste DataTables
+     * @return predicat contenant les termes de la recherche
+     * @see <a href="http://http://www.querydsl.com/static/querydsl/2.1.0/reference/html/ch03.html">QueryDSL doc</a>
      */
-    private Class<T> getDomainClass() {
-        ParameterizedType genericSuperclass = ((ParameterizedType) this.getClass().getGenericSuperclass());
-        return (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+    protected Predicate buildFilterQuery(DatatablesRequest datatablesRequest) {
+        Class<T> domainClass = getDomainClass();
+        PathBuilder<T> pathBuilder = new PathBuilder<T>(domainClass, domainClass.getSimpleName().toLowerCase());
+        BooleanBuilder builder = new BooleanBuilder();
+        for (ColumnProp prop : datatablesRequest.getColumnProps()) {
+            if (StringUtils.isNotBlank(prop.getSearch()))
+                builder.and(pathBuilder.getString(prop.getName()).containsIgnoreCase(prop.getSearch()));
+        }
+        return builder;
     }
 
     /**
-     * Construit un objet utilisé pour faire une requête de pagination et de tri
+     * Construit un objet utilisé pour faire une requête de pagination et de tri.
      *
      * @param dr état de la liste DataTables
      * @return Objet contenant les informations de pagination
+     * @see <a href="http://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html#web-pagination">Web pagination</a>
      */
     private Pageable buildPageRequest(DatatablesRequest dr) {
         int pageNumber = dr.getDisplayStart() / dr.getDisplaySize();
@@ -181,6 +198,16 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
         for (ColumnProp columnProp : columnProps)
             if (columnProp.isSorted()) orders.add(new Sort.Order(columnProp.getSortDirection(), columnProp.getName()));
         return new Sort(orders);
+    }
+
+    /**
+     * Méthode renvoyant l'entité de la couche domain/model
+     *
+     * @return ressource utilisée par le contrôlleur
+     */
+    private Class<T> getDomainClass() {
+        ParameterizedType genericSuperclass = ((ParameterizedType) this.getClass().getGenericSuperclass());
+        return (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
 
 }

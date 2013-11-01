@@ -43,6 +43,7 @@ public interface GenericService<T extends GenericDomain> {
      *
      * @param datatablesRequest état de la liste DataTables
      * @return les informations nécessaires à l'affichage de la page
+     * @see <a href="http://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html#repositories.special-parameters">Pagination</a>
      */
     Page<T> page(DatatablesRequest datatablesRequest);
 

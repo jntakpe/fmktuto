@@ -1,7 +1,7 @@
 package fr.sg.tuto.service.impl;
 
 import fr.sg.fmk.repository.FmkRepository;
-import fr.sg.fmk.service.impl.GenericSearchServiceImpl;
+import fr.sg.fmk.service.impl.GenericServiceImpl;
 import fr.sg.tuto.domain.Personne;
 import fr.sg.tuto.repository.PersonneRepository;
 import fr.sg.tuto.service.PersonneService;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author jntakpe
  */
 @Service
-public class PersonneServiceImpl extends GenericSearchServiceImpl<Personne> implements PersonneService {
+public class PersonneServiceImpl extends GenericServiceImpl<Personne> implements PersonneService {
 
     @Autowired
     private PersonneRepository personneRepository;
