@@ -4,10 +4,10 @@
 
 <footer th:fragment="footer">
     <nav class="navbar navbar-fixed-bottom" role="navigation">
-        <div class="container" style="margin-top: 15px">
-            <span class="pull-left">APP V1.0.0</span>
+        <div class="container">
+            <span class="pull-left" th:text="#{app.name}"></span>
             <span class="pull-right"><a id="link" href="mailto:jocelyn.ntakpe@sopragroup.com">
-                <i class="glyphicon glyphicon-envelope"></i> Contact</a>
+                <i class="fa fa-envelope"></i>&nbsp;<span th:text="#{footer.mail}"></span></a>
             </span>
         </div>
     </nav>

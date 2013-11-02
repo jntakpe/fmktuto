@@ -160,7 +160,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
      *
      * @param datatablesRequest état de la liste DataTables
      * @return predicat contenant les termes de la recherche
-     * @see <a href="http://http://www.querydsl.com/static/querydsl/2.1.0/reference/html/ch03.html">QueryDSL doc</a>
+     * @see <a href="http://www.querydsl.com/static/querydsl/2.1.0/reference/html/ch03.html">QueryDSL doc</a>
      */
     protected Predicate buildFilterQuery(DatatablesRequest datatablesRequest) {
         Class<T> domainClass = getDomainClass();

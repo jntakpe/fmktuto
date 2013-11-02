@@ -8,22 +8,23 @@
         <div th:include="../fragments/alertFragment :: alert"></div>
         <h2 th:text="#{parameter.title}"></h2>
 
-        <div class="row auto-search">
-            <div class="col-lg-3">
+        <div class="auto-search">
+            <div class="row"></div>
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="search-code" th:text="#{parameter.code}"></label>
                     <input name="code" type="email" class="form-control" id="search-code"
                            th:placeholder="#{parameter.code}"/>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="search-label" th:text="#{parameter.label}"></label>
                     <input name="label" type="text" class="form-control" id="search-label"
                            th:placeholder="#{parameter.label}"/>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="search-format" th:text="#{parameter.format}"></label>
                     <select name="format" class="form-control" id="search-format">
@@ -32,7 +33,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="search-value" th:text="#{parameter.value}"></label>
                     <input name="value" type="text" class="form-control" id="search-value"
@@ -77,25 +78,25 @@
                     <input type="hidden" id="version" name="version"/>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="code" th:text="#{parameter.code}"></label>
+                        <label class="col-md-2 control-label" for="code" th:text="#{parameter.code}"></label>
 
-                        <div class="col-sm-10">
+                        <div class="col-md-10">
                             <input type="text" id="code" name="code" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="label" th:text="#{parameter.label}"></label>
+                        <label class="col-md-2 control-label" for="label" th:text="#{parameter.label}"></label>
 
-                        <div class="col-sm-10">
+                        <div class="col-md-10">
                             <input type="text" id="label" name="label" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="format" th:text="#{parameter.format}"></label>
+                        <label class="col-md-2 control-label" for="format" th:text="#{parameter.format}"></label>
 
-                        <div class="col-sm-10">
+                        <div class="col-md-10">
                             <select class="form-control" id="format" name="format">
                                 <option th:text="#{select.none}" value=""></option>
                                 <option th:each="format : ${formats}" th:text="${format}" th:value="${format}"></option>
@@ -104,9 +105,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="value" th:text="#{parameter.value}"></label>
+                        <label class="col-md-2 control-label" for="value" th:text="#{parameter.value}"></label>
 
-                        <div class="col-sm-10">
+                        <div class="col-md-10">
                             <input type="text" id="value" name="value" class="form-control"/>
                         </div>
                     </div>

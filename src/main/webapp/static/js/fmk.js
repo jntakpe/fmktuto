@@ -132,11 +132,11 @@ var fmk = {
         if (!alertDiv.hasClass('alert-success')) {
             alertDiv.addClass('alert-success');
         }
-        if (alertIcon.hasClass('icon-warning-sign')) {
-            alertIcon.removeClass('icon-warning-sign');
+        if (alertIcon.hasClass('fa-warning')) {
+            alertIcon.removeClass('fa-warning');
         }
-        if (!alertIcon.hasClass('icon-ok')) {
-            alertIcon.addClass('icon-ok');
+        if (!alertIcon.hasClass('fa-check')) {
+            alertIcon.addClass('fa-check');
         }
         alertDiv.addClass('in'); //Fait apparaitre l'alert
         fmk.currentTimeout = window.setTimeout(function () { //Fait disparaitre l'alerte au bout d'un certain temps
@@ -168,11 +168,11 @@ var fmk = {
         if (!alertDiv.hasClass('alert-danger')) {
             alertDiv.addClass('alert-danger');
         }
-        if (alertIcon.hasClass('icon-ok')) {
-            alertIcon.removeClass('icon-ok');
+        if (alertIcon.hasClass('fa-check')) {
+            alertIcon.removeClass('fa-check');
         }
-        if (!alertIcon.hasClass('icon-warning-sign')) {
-            alertIcon.addClass('icon-warning-sign');
+        if (!alertIcon.hasClass('fa-warning')) {
+            alertIcon.addClass('fa-warning');
         }
         alertDiv.addClass('in'); //Affichage de l'alerte
     },
@@ -254,7 +254,7 @@ var fmk = {
             mRender: function (data) {
                 var path = window.location.pathname, detailUrl;
                 detailUrl = path.match(/\/$/) ? path + data + "/detail" : path + "/" + data + "/detail";
-                return "<a href='" + detailUrl + "'><i class='icon-search icon-large'></i></a>";
+                return "<a href='" + detailUrl + "'><i class='fa-search fa-lg'></i></a>";
             }
         };
     },
@@ -277,7 +277,7 @@ var fmk = {
             mRender: function (data) {
                 var path = window.location.pathname, editUrl;
                 editUrl = path.match(/\/$/) ? path + data : path + "/" + data;
-                return "<a class='edit-btn' href='" + editUrl + "'><i class='icon-edit icon-large'></i></a>";
+                return "<a class='edit-btn' href='" + editUrl + "'><i class='fa-edit fa-lg'></i></a>";
             }
         };
     },
@@ -299,7 +299,7 @@ var fmk = {
             sClass: "center",
             mRender: function (data) {
                 return "<a href='javascript:;' class='edit-btn' onclick='fmk.displayEditPopup( " + data + ", $(this))'>"
-                    + "<i class='icon-edit icon-large'></i></a>";
+                    + "<i class='fa-edit fa-lg'></i></a>";
             }
         };
     },
@@ -321,7 +321,7 @@ var fmk = {
             sClass: "center",
             mRender: function (data) {
                 var fct = "fmk.displayConfirmPopup(" + data + ", $(this))";
-                return "<a href='javascript:;' onclick='" + fct + "'><i class='icon-trash icon-large'></i></a>";
+                return "<a href='javascript:;' onclick='" + fct + "'><i class='fa-trash fa-lg'></i></a>";
             }
         };
     },
@@ -596,6 +596,23 @@ $(function () {
             searchData[name] = val;
         });
         dataTable.fnMultiFilter(searchData);
+    });
+
+    $('.reset-search').click(function () {
+        var dataTable, tableId, $dt, $search = $(this).closest('.click-search');
+        tableId = $search.data('table-id');
+        if (!tableId) { //Si le développeur n'a pas spécifié sur quelle table la recherche doit être effectuée
+            $dt = $('table[id^=dt_]');
+            if ($dt.length !== 1) {
+                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée";
+            }
+            tableId = $dt.attr('id');
+        }
+        dataTable = $('#' + tableId).data('dt'); // Récupération de la dataTable
+        if (!dataTable) {
+            throw "DataTable introuvable. Aucune DataTable pour l'id : '" + tableId + "'.";
+        }
+        dataTable.fnFilterClear();
     });
 
     //Fermeture des alertes après click sur 'close'

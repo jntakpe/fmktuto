@@ -17,16 +17,16 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a th:href="@{/personne}"><span class="icon-user"></span>&nbsp;<span
+                        <a th:href="@{/personne}"><span class="fa fa-user"></span>&nbsp;<span
                             th:text="#{personne.menu}"></span></a></li>
                     <li>
-                        <a th:href="@{/param}"><span class="icon-wrench"></span>&nbsp;<span
+                        <a th:href="@{/param}"><span class="fa fa-wrench"></span>&nbsp;<span
                                 th:text="#{parameter.menu}"></span></a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span sec:authentication="name"></span></a></li>
-                    <li><a th:href="@{/logout}"><span class="icon-signout icon-large"></span></a></li>
+                    <li><a th:href="@{/logout}"><span class="fa fa-signout fa-lg"></span></a></li>
                 </ul>
             </div>
         </div>
