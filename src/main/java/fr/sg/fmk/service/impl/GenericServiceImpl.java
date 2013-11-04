@@ -82,6 +82,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
      * {@inheritDoc}
      */
     @Override
+    @Transactional(readOnly = true)
     public Page<T> page(DatatablesRequest datatablesRequest) {
         return getRepository().findAll(buildFilterQuery(datatablesRequest), buildPageRequest(datatablesRequest));
     }
@@ -108,6 +109,7 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
      * @{inheritDoc}
      */
     @Override
+    @Transactional
     public void delete(T entity) {
         getRepository().delete(entity);
     }
