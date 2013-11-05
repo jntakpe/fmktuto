@@ -114,7 +114,7 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Créé ou modifie l'entité
+     * Créé ou modifie l'entité (utilisé pour les appels non-AJAX)
      *
      * @param domain             entité à sauvegarder
      * @param redirectAttributes attributs de redirection lus sur la page suivante
@@ -132,7 +132,7 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Créé ou modifie l'entité
+     * Créé ou modifie l'entité (utilisé pour les appels AJAX)
      *
      * @param domain entité à sauvegarder
      * @return message indiquant le résultat de l'opération

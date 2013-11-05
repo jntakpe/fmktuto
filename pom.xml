@@ -31,8 +31,7 @@
         <version.hibernate-annotations>3.5.6-Final</version.hibernate-annotations>
 
         <!-- Templating -->
-        <version.thymeleaf>2.0.19</version.thymeleaf>
-        <version.thymeleaf-security>2.0.0</version.thymeleaf-security>
+        <version.thymeleaf>2.1.0.RELEASE</version.thymeleaf>
 
         <!-- Framework de log -->
         <version.slf4j>1.7.5</version.slf4j>
@@ -57,7 +56,7 @@
         <version.querydsl>3.2.4</version.querydsl>
 
         <!-- Pilote Postgresql -->
-        <version.postgresql>9.2-1002-jdbc4</version.postgresql>
+        <version.postgresql>9.3-1100-jdbc4</version.postgresql>
 
     </properties>
 
@@ -227,7 +226,7 @@
             <dependency>
                 <groupId>org.thymeleaf.extras</groupId>
                 <artifactId>thymeleaf-extras-springsecurity3</artifactId>
-                <version>${version.thymeleaf-security}</version>
+                <version>${version.thymeleaf}</version>
             </dependency>
 
             <!-- Log -->

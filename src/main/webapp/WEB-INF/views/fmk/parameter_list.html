@@ -60,7 +60,7 @@
             </tr>
             </tbody>
         </table>
-        <div th:substituteby="../fragments/buttonFragment :: newPopupFragment"></div>
+        <div th:replace="../fragments/buttonFragment :: newPopupFragment"></div>
     </div>
 </div>
 <div id="parameter_popup" class="modal fade edit-popup" tabindex="-1" role="dialog" aria-hidden="true">
@@ -113,7 +113,7 @@
                     </div>
                 </form>
             </div>
-            <div th:substituteby="../fragments/buttonFragment :: popupButtonsFragment"></div>
+            <div th:replace="../fragments/buttonFragment :: popupButtonsFragment"></div>
         </div>
     </div>
 </div>
