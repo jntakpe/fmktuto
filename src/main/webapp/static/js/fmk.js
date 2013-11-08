@@ -34,8 +34,6 @@ var fmk = {
 
     //Attributs d'une table et leurs valeurs par défaut
     tableAttributes: {
-        //Indique si la table doit être gérée en AJAX pour les modifications et suppressions
-        ajax: new TableAttrs("ajax", true),
         //Indique si les données doivent être rechargées après chaque modification ou suppression
         reload: new TableAttrs("reload", false),
         //Indique l'id de la popup permettant d'éditer la table
@@ -107,7 +105,7 @@ var fmk = {
             throw "Attribut inconnu";
         }
         if (!attr.field) {
-            throw "Le paramètre de la méthode est l'objet 'TableAttrs' est non la valeur de son attribut 'field'";
+            throw "Le paramètre de la méthode est l'objet 'TableAttrs' est non la valeur de son attribut 'field'.";
         }
         var res = $table.data(attr.field);
         return res === undefined ? attr.defaultVal : res;
@@ -188,7 +186,7 @@ var fmk = {
         "use strict";
         var domainIdVal = id ? $('#' + id).val() : $event.closest('form').find("input[name='id']").val();
         if (!domainIdVal.length) {
-            throw "L'identifiant du formulaire '" + id ? id : 'id' + "' est introuvable";
+            throw "L'identifiant du formulaire '" + id ? id : 'id' + "' est introuvable.";
         }
         return {
             url: url,
@@ -209,7 +207,7 @@ var fmk = {
         "use strict";
         var $popup, dataTable, $popupForm, $popupSubmit, $table = $('#' + id);
         if (!$table.length) {
-            throw "L'identifiant de la table est incorrect";
+            throw "L'identifiant de la table est incorrect.";
         }
         if (dtOptions.bServerSide && !dtOptions.sAjaxDataProp) {
             dtOptions.sAjaxDataProp = "aaData"; //En cas de server-side, on wrap les données dans le champ aaData
@@ -253,31 +251,8 @@ var fmk = {
             sClass: "center",
             mRender: function (data) {
                 var path = window.location.pathname, detailUrl;
-                detailUrl = path.match(/\/$/) ? path + data + "/detail" : path + "/" + data + "/detail";
-                return "<a href='" + detailUrl + "'><i class='fa-search fa-lg'></i></a>";
-            }
-        };
-    },
-
-    /**
-     * Affiche le contenu d'une colonne de édition avec débranchement vers écran détail
-     * @param [id] identifiant de la table (defaut = "id")
-     * @param [width] taille de la colonne (defaut = 100)
-     * @returns {{mData: string, sWidth: number, bSearchable: boolean, bSortable: boolean, sClass: string, mRender:
-     * Function}}
-     */
-    editCol: function (id, width) {
-        "use strict";
-        return {
-            mData: id || "id",
-            sWidth: width || 100,
-            bSearchable: false,
-            bSortable: false,
-            sClass: "center",
-            mRender: function (data) {
-                var path = window.location.pathname, editUrl;
-                editUrl = path.match(/\/$/) ? path + data : path + "/" + data;
-                return "<a class='edit-btn' href='" + editUrl + "'><i class='fa-edit fa-lg'></i></a>";
+                detailUrl = path.match(/\/$/) ? path + data : path + "/" + data;
+                return "<a href='" + detailUrl + "'><i class='fa fa-edit fa-lg'></i></a>";
             }
         };
     },
@@ -299,7 +274,7 @@ var fmk = {
             sClass: "center",
             mRender: function (data) {
                 return "<a href='javascript:;' class='edit-btn' onclick='fmk.displayEditPopup( " + data + ", $(this))'>"
-                    + "<i class='fa-edit fa-lg'></i></a>";
+                    + "<i class='fa fa-edit fa-lg'></i></a>";
             }
         };
     },
@@ -321,7 +296,7 @@ var fmk = {
             sClass: "center",
             mRender: function (data) {
                 var fct = "fmk.displayConfirmPopup(" + data + ", $(this))";
-                return "<a href='javascript:;' onclick='" + fct + "'><i class='fa-trash fa-lg'></i></a>";
+                return "<a href='javascript:;' onclick='" + fct + "'><i class='fa fa-trash-o fa-lg'></i></a>";
             }
         };
     },
@@ -333,9 +308,12 @@ var fmk = {
      */
     displayConfirmPopup: function (id, $event) {
         "use strict";
-        var uri, $table = $event.closest("table[id^=dt_]"); //Récupération de la table
+        var uri, $table = $event.closest("table[id^=dt_]"), $popup = $("#confirmDeletePopup"); //Récupération de la table
         if (!$table.length) {
-            throw "La table est introuvable. Le nom d'une datatable doit commencer par dt_";
+            throw "La table est introuvable. Le nom d'une datatable doit commencer par 'dt_'.";
+        }
+        if (!$popup.length) {
+            throw "La popup de confirmation n'est pas présente sur l'écran. Merci de l'importer.";
         }
         uri = this.getTableAttr($table, this.tableAttributes.deleteUri);
         uri = uri.match(/\/$/) ? uri + id : uri + "/" + id;
@@ -344,7 +322,7 @@ var fmk = {
                 if (response.success) {
                     $('#delete-message').text(response.message);
                 } else {
-                    $("#confirmDeletePopup").modal('hide');
+                    $popup.modal('hide');
                     fmk.displayError(response);
                 }
 
@@ -352,7 +330,7 @@ var fmk = {
         //Stockage des infos relatives à la ligne ayant déclenché l'événement
         $table.data("rowInfos", new RowInfos(id, $event.closest('tr')[0]));
         $('body').data("currentTable", $table.attr('id'));
-        $("#confirmDeletePopup").modal();
+        $popup.modal();
     },
 
     /**
@@ -364,7 +342,7 @@ var fmk = {
             rowInfos = $table.data('rowInfos'), uri;
         uri = fmk.getTableAttr($table, fmk.tableAttributes.deleteUri);
         uri = uri.match(/\/$/) ? uri + rowInfos.rowId : uri + "/" + rowInfos.rowId;
-        if (fmk.getTableAttr($table, fmk.tableAttributes.ajax)) { //Appel AJAX
+        if (!dataTable.fnSettings().bServerSide) { //Appel AJAX
             $.ajax({
                 type: 'DELETE',
                 url: uri
@@ -459,7 +437,7 @@ var fmk = {
     saveRow: function (form, dataTable, $table) {
         "use strict";
         var rowInfos;
-        if (fmk.getTableAttr($table, fmk.tableAttributes.ajax)) { //Modifications en AJAX
+        if (!dataTable.fnSettings().bServerSide) { //Modifications en AJAX
             $(form).ajaxSubmit({
                 type: 'put',
                 success: function (response) {
@@ -515,13 +493,13 @@ $(function () {
     function searchHandler() {
         var dataTable, tableId, $dt, $search = $(this).closest('.auto-search'), name = $(this).attr('name'), settings;
         if (!name) {
-            throw "Impossible d'effectuer une recherche si l'attribut name de l'input n'est pas renseigné";
+            throw "Impossible d'effectuer une recherche si l'attribut name de l'input n'est pas renseigné.";
         }
         tableId = $search.data('table-id');
         if (!tableId) { //Si le développeur n'a pas spécifié sur quelle table la recherche doit être effectuée
             $dt = $('table[id^=dt_]');
             if ($dt.length !== 1) {
-                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée";
+                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée.";
             }
             tableId = $dt.attr('id');
         }
@@ -580,7 +558,7 @@ $(function () {
         if (!tableId) { //Si le développeur n'a pas spécifié sur quelle table la recherche doit être effectuée
             $dt = $('table[id^=dt_]');
             if ($dt.length !== 1) {
-                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée";
+                throw "Impossible de definir la table sur laquelle la recherche doit être effectuée.";
             }
             tableId = $dt.attr('id');
         }
@@ -591,7 +569,7 @@ $(function () {
         $search.find('input , select').each(function () {
             var name = $(this).attr('name'), val = $(this).val();
             if (!name) {
-                throw "Impossible d'effectuer une recherche si l'attribut name de l'input n'est pas renseigné";
+                throw "Impossible d'effectuer une recherche si l'attribut name de l'input n'est pas renseigné.";
             }
             searchData[name] = val;
         });

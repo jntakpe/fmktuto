@@ -14,7 +14,7 @@
         <version.jboss.javaee>3.0.2.Final</version.jboss.javaee>
 
         <!-- Spring -->
-        <version.spring>3.2.4.RELEASE</version.spring>
+        <version.spring>3.2.5.RELEASE</version.spring>
 
         <!-- Spring Data JPA -->
         <version.spring-data-jpa>1.4.1.RELEASE</version.spring-data-jpa>

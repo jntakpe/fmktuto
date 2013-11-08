@@ -49,16 +49,19 @@
                     <th th:text="#{personne.prenom}"></th>
                     <th th:text="#{personne.telephone}"></th>
                     <th th:text="#{personne.email}"></th>
+                    <th th:text="#{list.modify}"></th>
+                    <th th:text="#{list.delete}"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td colspan="4" class="dataTables_empty" th:text="#{list.load}"></td>
+                    <td colspan="6" class="dataTables_empty" th:text="#{list.load}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <div th:replace="../fragments/popupFragment :: confirmDeletePopupFragment"></div>
 </div>
 <footer th:include="../fragments/footerFragment :: footer"></footer>
 <script type="text/javascript">
@@ -73,7 +76,9 @@
                         {mData: "nom"},
                         {mData: "prenom"},
                         {mData: "telephone"},
-                        {mData: "email"}
+                        {mData: "email"},
+                        fmk.detailCol(),
+                        fmk.deleteCol()
                     ]
                 });
     });

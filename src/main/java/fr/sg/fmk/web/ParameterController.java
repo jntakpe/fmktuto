@@ -47,7 +47,7 @@ public class ParameterController extends GenericController<Parameter> {
 
     @Override
     public String getListViewPath() {
-        return "fmk/parameter";
+        return "fmk/parameter_list";
     }
 
     @Override
