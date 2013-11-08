@@ -9,7 +9,7 @@
          th:class="${responseMessage != null} ? (${responseMessage.success} ? 'alert alert-success fade' : 'alert alert-danger fade') : 'alert fade'">
         <button id="close-alert" type="button" class="close">&times;</button>
         <span id="alert-icon"
-              th:class="${responseMessage != null} ? (${responseMessage.success} ? 'fa fa-ok' : 'fa fa-warning-sign')">
+              th:class="${responseMessage != null} ? (${responseMessage.success} ? 'fa fa-check' : 'fa fa-warning-sign')">
         </span>
         <span id="alert-message" th:text="${responseMessage != null} ? ${responseMessage.message}"></span>
     </div>

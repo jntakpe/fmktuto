@@ -131,10 +131,10 @@ var fmk = {
             alertDiv.addClass('alert-success');
         }
         if (alertIcon.hasClass('fa-warning')) {
-            alertIcon.removeClass('fa-warning');
+            alertIcon.removeClass('fa fa-warning');
         }
         if (!alertIcon.hasClass('fa-check')) {
-            alertIcon.addClass('fa-check');
+            alertIcon.addClass('fa fa-check');
         }
         alertDiv.addClass('in'); //Fait apparaitre l'alert
         fmk.currentTimeout = window.setTimeout(function () { //Fait disparaitre l'alerte au bout d'un certain temps
@@ -167,10 +167,10 @@ var fmk = {
             alertDiv.addClass('alert-danger');
         }
         if (alertIcon.hasClass('fa-check')) {
-            alertIcon.removeClass('fa-check');
+            alertIcon.removeClass('fa fa-check');
         }
         if (!alertIcon.hasClass('fa-warning')) {
-            alertIcon.addClass('fa-warning');
+            alertIcon.addClass('fa fa-warning');
         }
         alertDiv.addClass('in'); //Affichage de l'alerte
     },
@@ -342,7 +342,7 @@ var fmk = {
             rowInfos = $table.data('rowInfos'), uri;
         uri = fmk.getTableAttr($table, fmk.tableAttributes.deleteUri);
         uri = uri.match(/\/$/) ? uri + rowInfos.rowId : uri + "/" + rowInfos.rowId;
-        if (!dataTable.fnSettings().bServerSide) { //Appel AJAX
+        if (!dataTable.fnSettings().oInit.bServerSide) { //Appel AJAX
             $.ajax({
                 type: 'DELETE',
                 url: uri
@@ -437,7 +437,7 @@ var fmk = {
     saveRow: function (form, dataTable, $table) {
         "use strict";
         var rowInfos;
-        if (!dataTable.fnSettings().bServerSide) { //Modifications en AJAX
+        if (!dataTable.fnSettings().oInit.bServerSide) { //Modifications en AJAX
             $(form).ajaxSubmit({
                 type: 'put',
                 success: function (response) {
