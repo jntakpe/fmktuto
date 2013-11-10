@@ -43,7 +43,7 @@ public class ExceptionController {
     public ModelAndView handleFmkException(FmkException e, HttpServletRequest request) {
         e.printStackTrace();
         FlashMap map = RequestContextUtils.getOutputFlashMap(request);
-        map.put("responseMessage", ResponseMessage.getErrorMessage(e));
+        map.put("responseMessage", ResponseMessage.getErrorMessage(e.getMessage()));
         String referer = request.getHeader("referer");
         View view = referer != null ? new RedirectView(referer) : new RedirectView(FmkUtils.ERROR_VIEW, true);
         return new ModelAndView(view);

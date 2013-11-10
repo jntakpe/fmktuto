@@ -159,6 +159,7 @@ public abstract class GenericController<T extends GenericDomain> {
     public ModelAndView delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView(getRedirectListView());
         T domain = getService().findOne(id);
+        domain = null;
         if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
         getService().delete(domain);
         messageManager.logMessage("MSG00003", LogLevel.INFO, FmkUtils.getCurrentUsername(), domain);

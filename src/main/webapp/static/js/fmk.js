@@ -315,22 +315,19 @@ var fmk = {
         if (!$popup.length) {
             throw "La popup de confirmation n'est pas présente sur l'écran. Merci de l'importer.";
         }
+        $popup.modal();
         uri = this.getTableAttr($table, this.tableAttributes.deleteUri);
         uri = uri.match(/\/$/) ? uri + id : uri + "/" + id;
         $.ajax(uri + '/message').
             done(function (response) { //Récupération du message à afficher dans la popup
                 if (response.success) {
                     $('#delete-message').text(response.message);
-                } else {
-                    $popup.modal('hide');
-                    fmk.displayError(response);
                 }
-
             });
         //Stockage des infos relatives à la ligne ayant déclenché l'événement
         $table.data("rowInfos", new RowInfos(id, $event.closest('tr')[0]));
         $('body').data("currentTable", $table.attr('id'));
-        $popup.modal();
+
     },
 
     /**
@@ -609,7 +606,7 @@ $(function () {
     //Gestion des erreurs centralisée
     $(document).ajaxError(function (event, xhr) {
         fmk.displayError(xhr['responseJSON']);
-        $('.modal').hide();
+        $('.modal').modal('hide');
     });
 
 });
