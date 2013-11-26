@@ -6,19 +6,19 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * Wrapper encapsulant la réponse envoyée à une DataTable
+ * Wrapper encapsulant la rÃ©ponse envoyÃ©e Ã  une DataTable
  *
  * @author jntakpe
  */
 public final class DatatablesResponse<T extends GenericDomain> {
 
     /**
-     * Contenu de la table à afficher
+     * Contenu de la table Ã  afficher
      */
     private final List<T> aaData;
 
     /**
-     * Nombre total d'enregistrements sur une page (enregistrements filtrés)
+     * Nombre total d'enregistrements sur une page (enregistrements filtrÃ©s)
      */
     private final Integer iTotalRecords;
 
@@ -34,7 +34,7 @@ public final class DatatablesResponse<T extends GenericDomain> {
 
     /**
      * Constructeur
-     * @param page objet contenant les informations sur la page à afficher
+     * @param page objet contenant les informations sur la page Ã  afficher
      * @param sEcho compteur d'appel au serveur
      */
     public DatatablesResponse(Page<T> page, Integer sEcho) {

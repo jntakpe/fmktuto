@@ -1,6 +1,5 @@
 package fr.sg.fmk.web;
 
-import fr.sg.fmk.exception.AjaxException;
 import fr.sg.fmk.dto.ResponseMessage;
 import fr.sg.fmk.exception.AjaxException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,7 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * Capte les exceptions sortant des méthodes AJAX et les encapsule dans une {@link fr.sg.fmk.exception.AjaxException}
+ * Capte les exceptions sortant des mÃ©thodes AJAX et les encapsule dans une {@link fr.sg.fmk.exception.AjaxException}
  *
  * @author jntakpe
  */
@@ -20,11 +19,11 @@ import org.springframework.stereotype.Component;
 public class AjaxExceptionTranslator {
 
     /**
-     * Méthode interceptant les exceptions lancées par la couche web. Dans le cas d'un appel AJAX avec renvoi d'un
+     * MÃ©thode interceptant les exceptions lancÃ©es par la couche web. Dans le cas d'un appel AJAX avec renvoi d'un
      * {@link ResponseMessage} on encapsule l'exception
      *
-     * @param joinPoint méthode initialement appelée (greffon)
-     * @return L'objet normalement retourné par la méthode appelée
+     * @param joinPoint mÃ©thode initialement appelÃ©e (greffon)
+     * @return L'objet normalement retournÃ© par la mÃ©thode appelÃ©e
      * @throws Throwable rethrow les exceptions
      */
     @Around("execution(* fr.sg.*.web..*.*(..))" +

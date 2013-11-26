@@ -6,19 +6,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Collection;
 
 /**
- * Classe contenant les méthodes utilitaires du framework
+ * Classe contenant les mÃ©thodes utilitaires du framework
  *
  * @author jntakpe
  */
 public final class FmkUtils {
 
     /**
-     * URI de l'écran d'accueil
+     * URI de l'Ã©cran d'accueil
      */
     public static final String PORTAL_VIEW = "/portal";
 
     /**
-     * URI de l'écran d'erreur
+     * URI de l'Ã©cran d'erreur
      */
     public static final String ERROR_VIEW = "/error";
 
@@ -29,7 +29,7 @@ public final class FmkUtils {
     }
 
     /**
-     * Récupère le login de l'utilisateur courant
+     * RÃ©cupÃ¨re le login de l'utilisateur courant
      *
      * @return login courant
      */
@@ -38,9 +38,9 @@ public final class FmkUtils {
     }
 
     /**
-     * Rôles de l'utilisateur courant
+     * RÃ´les de l'utilisateur courant
      *
-     * @return rôles de l'utilisateur connecté
+     * @return rÃ´les de l'utilisateur connectÃ©
      */
     public static Collection<? extends GrantedAuthority> getCurrentRoles() {
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities();

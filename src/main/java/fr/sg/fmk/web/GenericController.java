@@ -20,8 +20,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * Contrôleur abstrait des écrans liste et détail.
- * Les méthodes non 'private' doivent être surchargées si elles ne correspondent pas au fonctionnement souhaité.
+ * ContrÃ´leur abstrait des Ã©crans liste et dÃ©tail.
+ * Les mÃ©thodes non 'private' doivent Ãªtre surchargÃ©es si elles ne correspondent pas au fonctionnement souhaitÃ©.
  *
  * @author cegiraud
  * @author jntakpe
@@ -35,7 +35,7 @@ public abstract class GenericController<T extends GenericDomain> {
     protected MessageManager messageManager;
 
     /**
-     * Méthode permettant de récupérer le service à utiliser.
+     * MÃ©thode permettant de rÃ©cupÃ©rer le service Ã  utiliser.
      *
      * @return interface du service.
      */
@@ -44,7 +44,7 @@ public abstract class GenericController<T extends GenericDomain> {
     /**
      * Affiche la page liste
      *
-     * @return le chemin de la page à afficher. Pour modifier le nom de la vue de la liste à afficher,
+     * @return le chemin de la page ï¿½ afficher. Pour modifier le nom de la vue de la liste ï¿½ afficher,
      *         veuillez utiliser {@link fr.sg.fmk.web.GenericController#getListViewPath()}
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -53,9 +53,9 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Renvoi toutes les données d'une table. Datatables gère ensuite le filtrage, le tri et la pagination.
+     * Renvoi toutes les donnÃ©es d'une table. Datatables gÃ¨re ensuite le filtrage, le tri et la pagination.
      *
-     * @return entités à afficher
+     * @return entitÃ©s Ã  afficher
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -64,10 +64,10 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Renvoi les données déjà filtrées, triées et paginées en fonction des paramètres Datatables
+     * Renvoi les donnÃ©es dÃ©jÃ  filtrÃ©es, triÃ©es et paginÃ©es en fonction des paramÃ¨tres Datatables
      *
-     * @param datatablesRequest état de la liste DataTables
-     * @return entités filtrées, triées et paginées à afficher
+     * @param datatablesRequest Ã©tat de la liste DataTables
+     * @return entitÃ©s filtrÃ©es, triÃ©es et paginÃ©es Ã  afficher
      */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     @ResponseBody
@@ -76,10 +76,10 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Renvoi une entité en fonction de l'identifiant pour l'affichage de popup
+     * Renvoi une entitÃ© en fonction de l'identifiant pour l'affichage de popup
      *
-     * @param id identifiant de l'entité
-     * @return message indiquant si l'entité a bien été récupérée
+     * @param id identifiant de l'entitÃ©
+     * @return message indiquant si l'entitÃ© a bien Ã©tÃ© rÃ©cupÃ©rÃ©e
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -90,9 +90,9 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Affiche l'écran détail de création d'un nouveau élément
+     * Affiche l'Ã©cran dÃ©tail de crÃ©ation d'un nouveau Ã©lÃ©ment
      *
-     * @return page détail
+     * @return page dÃ©tail
      */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView detail() throws Exception {
@@ -100,10 +100,10 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Affiche l'écran détail correspondant à l'élément possédant cette id
+     * Affiche l'Ã©cran dÃ©tail correspondant Ã  l'Ã©lÃ©ment possÃ©dant cette id
      *
-     * @param id identifiant de l'élément à afficher
-     * @return page détail
+     * @param id identifiant de l'Ã©lÃ©ment Ã  afficher
+     * @return page dÃ©tail
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView detail(@PathVariable Long id) {
@@ -114,11 +114,11 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Créé ou modifie l'entité (utilisé pour les appels non-AJAX)
+     * CrÃ©Ã© ou modifie l'entitÃ© (utilisÃ© pour les appels non-AJAX)
      *
-     * @param domain             entité à sauvegarder
+     * @param domain             entitÃ© Ã  sauvegarder
      * @param redirectAttributes attributs de redirection lus sur la page suivante
-     * @return page à afficher
+     * @return page Ã  afficher
      */
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(@ModelAttribute T domain, RedirectAttributes redirectAttributes) {
@@ -132,10 +132,10 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Créé ou modifie l'entité (utilisé pour les appels AJAX)
+     * CrÃ©Ã© ou modifie l'entitÃ© (utilisÃ© pour les appels AJAX)
      *
-     * @param domain entité à sauvegarder
-     * @return message indiquant le résultat de l'opération
+     * @param domain entitÃ© Ã  sauvegarder
+     * @return message indiquant le rÃ©sultat de l'opÃ©ration
      */
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
@@ -149,11 +149,11 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Supprime l'entité correspondante à l'identifiant lors d'un appel non-AJAX.
-     * La page sera donc rechargée à l'issue de la suppression de l'entité.
+     * Supprime l'entitÃ© correspondante Ã  l'identifiant lors d'un appel non-AJAX.
+     * La page sera donc rechargÃ©e Ã  l'issue de la suppression de l'entitÃ©.
      *
-     * @param id identifiant de l'entité à supprimer
-     * @return page à afficher
+     * @param id identifiant de l'entitÃ© Ã  supprimer
+     * @return page Ã  afficher
      */
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
@@ -169,12 +169,12 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Supprime l'entité correspondante à l'identifiant lors d'un appel AJAX.
-     * L'entité sera supprimée côté serveur (Database).
-     * Le client(JavaScript) se chargera de la suppression de l'entité dans la table.
+     * Supprime l'entitÃ© correspondante Ã  l'identifiant lors d'un appel AJAX.
+     * L'entitÃ© sera supprimÃ©e cÃ´tÃ© serveur (Database).
+     * Le client(JavaScript) se chargera de la suppression de l'entitï¿½ dans la table.
      *
-     * @param id identifiant de l'élément à supprimer
-     * @return message indiquant le résultat de la suppression
+     * @param id identifiant de l'Ã©lÃ©ment Ã  supprimer
+     * @return message indiquant le rÃ©sultat de la suppression
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
@@ -189,8 +189,8 @@ public abstract class GenericController<T extends GenericDomain> {
     /**
      * Renvoi le message de confirmation de suppression d'une ligne
      *
-     * @param id identifiant de l'entité
-     * @return le message confirmation de suppression de cette entité
+     * @param id identifiant de l'entitÃ©
+     * @return le message confirmation de suppression de cette entitÃ©
      */
     @RequestMapping(value = "/{id}/message", method = RequestMethod.GET)
     @ResponseBody
@@ -201,27 +201,27 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Récupère le nom de la vue de la liste à afficher.
-     * A surcharger si le nom de la vue est différent de 'lists/' + NOM_ENTITE + '_list'.
+     * RÃ©cupÃ©re le nom de la vue de la liste Ã  afficher.
+     * A surcharger si le nom de la vue est diffÃ©rent de 'lists/' + NOM_ENTITE + '_list'.
      *
-     * @return le nom de la vue à afficher
+     * @return le nom de la vue Ã  afficher
      */
     public String getListViewPath() {
         return "lists/" + getDomainClass().getSimpleName().toLowerCase() + "_list";
     }
 
     /**
-     * Récupère le chemin de la vue du détail à afficher.
-     * A surcharger si le chemin de la vue est différent de 'details/' + NOM_ENTITE + '_detail'.
+     * RÃ©cupÃ¨re le chemin de la vue du dÃ©tail Ã  afficher.
+     * A surcharger si le chemin de la vue est diffÃ©rent de 'details/' + NOM_ENTITE + '_detail'.
      *
-     * @return le nom de la vue à afficher
+     * @return le nom de la vue Ã  afficher
      */
     public String getDetailViewPath() {
         return "details/" + getDomainClass().getSimpleName().toLowerCase() + "_detail";
     }
 
     /**
-     * Renvoi la page de la liste depuis un détail
+     * Renvoi la page de la liste depuis un dÃ©tail
      *
      * @return page liste
      */
@@ -232,9 +232,9 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Méthode renvoyant l'entité de la couche domain/model
+     * MÃ©thode renvoyant l'entitÃ© de la couche domain/model
      *
-     * @return ressource utilisée par le contrôlleur
+     * @return ressource utilisÃ©e par le contrÃ´lleur
      */
     protected final Class<T> getDomainClass() {
         return (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];

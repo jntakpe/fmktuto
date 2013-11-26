@@ -6,9 +6,9 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
- * Interface ‡ Ètendre lors de la crÈation d'un repository gÈrÈ par le framework.
- * Permet de bÈnÈficier gr‚ce ‡ {@link JpaRepository} de tous les CRUDs et d'autres mÈthodes usuelles et gr‚ce ‡
- * {@link QueryDslPredicateExecutor} de la crÈation de mÈthodes de filtrage type safe.
+ * Interface √† √©tendre lors de la cr√©ation d'un repository g√©r√© par le framework.
+ * Permet de b√©n√©ficier gr√¢ce √† {@link JpaRepository} de tous les CRUDs et d'autres m√©thodes usuelles et gr√¢ce √†
+ * {@link QueryDslPredicateExecutor} de la cr√©ation de m√©thodes de filtrage type safe.
  *
  * @author jntakpe
  * @see JpaRepository

@@ -1,7 +1,7 @@
 package fr.sg.fmk.exception;
 
 /**
- * Exception encapsulant les exceptions techniques du framework (accès DB ou accès fichier ...)
+ * Exception encapsulant les exceptions techniques du framework (accÃ¨s DB ou accÃ¨s fichier ...)
  *
  * @author jntakpe
  */

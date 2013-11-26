@@ -1,8 +1,8 @@
 package fr.sg.fmk.dto;
 
 /**
- * Wrapper renvoyée par l'application aux requêtes notamment aux requêtes AJAX.
- * Peut aussi être ajouté à un objet ModelAndView.
+ * Wrapper renvoyÃ©e par l'application aux requÃªtes notamment aux requÃªtes AJAX.
+ * Peut aussi Ãªtre ajoutÃ© Ã  un objet ModelAndView.
  *
  * @author jntakpe
  * @author cegiraud
@@ -10,17 +10,17 @@ package fr.sg.fmk.dto;
 public final class ResponseMessage {
 
     /**
-     * Message qui sera affiché à l'écran
+     * Message qui sera affichÃ© Ã  l'Ã©cran
      */
     private String message;
 
     /**
-     * Indicateur permettant de savoir si le message doit être affiché dans une alerte d'erreur
+     * Indicateur permettant de savoir si le message doit Ãªtre affichÃ© dans une alerte d'erreur
      */
     private boolean success;
 
     /**
-     * Objet permettant de passer n'importe quel paramètre additionnel
+     * Objet permettant de passer n'importe quel paramÃ¨tre additionnel
      */
     private Object data;
 
@@ -42,9 +42,9 @@ public final class ResponseMessage {
     }
 
     /**
-     * Créé un message de succès pour les appels AJAX contenant un message
+     * CrÃ©Ã© un message de succÃ¨s pour les appels AJAX contenant un message
      *
-     * @param message message à afficher
+     * @param message message Ã  afficher
      * @return ResponseMessage contenant le message
      */
     public static ResponseMessage getSuccessMessage(String message) {
@@ -52,40 +52,40 @@ public final class ResponseMessage {
     }
 
     /**
-     * Créé un message de succès pour les appels AJAX contenant des données
+     * CrÃ©Ã© un message de succÃ¨s pour les appels AJAX contenant des donnÃ©es
      *
-     * @param data données à utiliser côté client
-     * @return ResponseMessage contenant les données
+     * @param data donnÃ©es Ã  utiliser cÃ´tÃ© client
+     * @return ResponseMessage contenant les donnÃ©es
      */
     public static ResponseMessage getSuccessMessage(Object data) {
         return new ResponseMessage(true, data);
     }
 
     /**
-     * Créé un message de succès pour les appels AJAX contenant un message et des données
+     * CrÃ©Ã© un message de succÃ¨s pour les appels AJAX contenant un message et des donnÃ©es
      *
-     * @param message message à afficher
-     * @param data    données à utiliser côté client
-     * @return ResponseMessage contenant les données
+     * @param message message Ã  afficher
+     * @param data    donnÃ©es Ã  utiliser cÃ´tÃ© client
+     * @return ResponseMessage contenant les donnÃ©es
      */
     public static ResponseMessage getSuccessMessage(String message, Object data) {
         return new ResponseMessage(true, message, data);
     }
 
     /**
-     * Créé un message de succès pour les appels AJAX contenant des données
+     * CrÃ©Ã© un message de succÃ¨s pour les appels AJAX contenant des donnÃ©es
      *
-     * @param data données à utiliser côté client
-     * @return ResponseMessage contenant les données
+     * @param data donnÃ©es Ã  utiliser cÃ´tÃ© client
+     * @return ResponseMessage contenant les donnÃ©es
      */
     public static ResponseMessage getErrorMessage(Object data) {
         return new ResponseMessage(false, data);
     }
 
     /**
-     * Créé un message d'erreur pour les appels AJAX contenant un message
+     * CrÃ©Ã© un message d'erreur pour les appels AJAX contenant un message
      *
-     * @param message message à afficher
+     * @param message message Ã  afficher
      * @return ResponseMessage contenant le message
      */
     public static ResponseMessage getErrorMessage(String message) {
@@ -93,11 +93,11 @@ public final class ResponseMessage {
     }
 
     /**
-     * Créé un message de succès pour les appels AJAX contenant un message et des données
+     * CrÃ©Ã© un message de succÃ¨s pour les appels AJAX contenant un message et des donnÃ©es
      *
-     * @param message message à afficher
-     * @param data    données à utiliser côté client
-     * @return ResponseMessage contenant les données
+     * @param message message Ã  afficher
+     * @param data    donnÃ©es Ã  utiliser cÃ´tÃ© client
+     * @return ResponseMessage contenant les donnÃ©es
      */
     public static ResponseMessage getErrorMessage(String message, Object data) {
         return new ResponseMessage(false, message, data);

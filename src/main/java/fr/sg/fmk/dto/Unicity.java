@@ -1,7 +1,7 @@
 package fr.sg.fmk.dto;
 
 /**
- * Wrapper permettant de contrôler la contrainte d'unicité d'un champ
+ * Wrapper permettant de contrÃ´leur la contrainte d'unicitÃ© d'un champ
  *
  * @author jntakpe
  */
@@ -13,7 +13,7 @@ public final class Unicity {
     private String field;
 
     /**
-     * Identifiant de l'entité (null pour une nouvelle entité)
+     * Identifiant de l'entitÃ© (null pour une nouvelle entitÃ©)
      */
     private Long id;
 

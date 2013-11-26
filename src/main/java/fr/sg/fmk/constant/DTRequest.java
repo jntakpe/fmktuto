@@ -1,7 +1,7 @@
 package fr.sg.fmk.constant;
 
 /**
- * Enumération des paramètres envoyés par DataTables
+ * EnumÃ©ration des paramÃ¨tres envoyÃ©s par DataTables
  *
  * @author jntakpe
  */
@@ -24,14 +24,14 @@ public enum DTRequest {
     S_SORT_DIR("sSortDir_");
 
     /**
-     * Valeur du paramètre d'url
+     * Valeur du paramÃ¨tre d'url
      */
     private final String param;
 
     /**
      * Constructeur
      *
-     * @param param valeur du paramètre d'url
+     * @param param valeur du paramÃ¨tre d'url
      */
     private DTRequest(String param) {
         this.param = param;

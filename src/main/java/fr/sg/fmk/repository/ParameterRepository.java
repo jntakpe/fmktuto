@@ -3,7 +3,7 @@ package fr.sg.fmk.repository;
 import fr.sg.fmk.domain.Parameter;
 
 /**
- * Interface permettant de gérer l'entité {@link fr.sg.fmk.domain.Parameter}
+ * Interface permettant de gÃ©rer l'entitÃ© {@link fr.sg.fmk.domain.Parameter}
  *
  * @author jntakpe
  * @see FmkRepository
@@ -11,10 +11,10 @@ import fr.sg.fmk.domain.Parameter;
 public interface ParameterRepository extends FmkRepository<Parameter> {
 
     /**
-     * Récupère en base de données le {@link fr.sg.fmk.domain.Parameter} à partir du code du paramètre
+     * RÃ©cupÃ¨re en base de donnÃ©es le {@link fr.sg.fmk.domain.Parameter} Ã  partir du code du paramÃ¨tre
      *
-     * @param code code du paramtère
-     * @return le paramètre correspondant au code
+     * @param code code du paramtÃ¨re
+     * @return le paramÃ¨tre correspondant au code
      */
     Parameter findByCode(String code);
 }

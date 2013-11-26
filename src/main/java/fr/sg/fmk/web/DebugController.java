@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
- * Controller utilisé pour accéder aux informations de debug du framework
+ * Controller utilisÃ© pour accÃ©der aux informations de debug du framework
  *
  * @author jntakpe
  */
@@ -21,8 +21,8 @@ public class DebugController {
     private RequestMappingHandlerMapping handlerMapping;
 
     /**
-     * Affiche les différentes méthodes des contrôleur mappées
-     * @return nom de la vue à afficher
+     * Affiche les diffÃ©rentes mÃ©thodes des contrÃ´leur mappÃ©es
+     * @return nom de la vue Ã  afficher
      */
     @RequestMapping(value="/endpoints", method= RequestMethod.GET)
     public ModelAndView show() {

@@ -1,23 +1,23 @@
 package fr.sg.fmk.exception;
 
 /**
- * Enumération des exceptions métiers
+ * EnumÃ©ration des exceptions mÃ©tiers
  *
  * @author jntakpe
  */
 public enum BusinessCode implements ErrorCode {
     /**
-     * Exception lancée si la méthode standard de recherche l'objet courant est absente dans la couche repository
+     * Exception lancÃ©e si la mÃ©thode standard de recherche l'objet courant est absente dans la couche repository
      */
     REPOSITORY_METHOD_MISSING,
 
     /**
-     * Exception lancée si le champ donné est introuvable est introuvable sur l'entité
+     * Exception lancÃ©e si le champ donnÃ© est introuvable est introuvable sur l'entitÃ©
      */
     ENTITY_FIELD_MISSING,
 
     /**
-     * Exception levée lorsque l'identifiant recherché n'est associé à aucune entité
+     * Exception levÃ©e lorsque l'identifiant recherchÃ© n'est associÃ© Ã  aucune entitÃ©
      */
     ENTITY_NOT_FOUND
 }

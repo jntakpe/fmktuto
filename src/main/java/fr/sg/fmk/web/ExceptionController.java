@@ -33,10 +33,10 @@ public class ExceptionController {
     private MessageManager messageManager;
 
     /**
-     * Capte les exceptions framework non gérées par la couche web, reviens à la page précédente et transmet l'erreur
+     * Capte les exceptions framework non gÃ©rÃ©es par la couche web, reviens Ã  la page prÃ©cÃ©dente et transmet l'erreur
      *
      * @param e exception du type FmkException
-     * @return la page précédente avec l'erreur
+     * @return la page prÃ©cÃ©dente avec l'erreur
      */
     @ExceptionHandler(FmkException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -50,10 +50,10 @@ public class ExceptionController {
     }
 
     /**
-     * Gère les exceptions sur les requêtes AJAX
+     * GÃ¨re les exceptions sur les requÃªtes AJAX
      *
      * @param e exception encapsulant l'exception d'origine
-     * @return entité contenant le message à afficher et le code de retour HTTP
+     * @return entitÃ© contenant le message Ã  afficher et le code de retour HTTP
      */
     @ExceptionHandler(AjaxException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -67,7 +67,7 @@ public class ExceptionController {
     }
 
     /**
-     * Capte les exceptions non catchées de la couche web et affiche l'écran d'erreur.
+     * Capte les exceptions non catchÃ©es de la couche web et affiche l'Ã©cran d'erreur.
      *
      * @param e exception
      * @return page d'affichage standard des erreurs

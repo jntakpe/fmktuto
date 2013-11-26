@@ -1,6 +1,5 @@
 package fr.sg.fmk.service.impl;
 
-import fr.sg.fmk.exception.ErrorCode;
 import fr.sg.fmk.constant.LogLevel;
 import fr.sg.fmk.exception.ErrorCode;
 import fr.sg.fmk.service.MessageManager;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Locale;
 
 /**
- * Implémentation de gestion des messages bundles
+ * ImplÃ©mentation de gestion des messages bundles
  *
  * @author jntakpe
  */
@@ -26,7 +25,7 @@ public class MessageManagerImpl implements MessageManager {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Bean encapsulant tous les accès aux différents bundles déclarés à Spring
+     * Bean encapsulant tous les accÃ¨s aux diffÃ©rents bundles dÃ©clarÃ©s Ã  Spring
      */
     @Autowired
     private MessageSource messageSource;
@@ -72,7 +71,7 @@ public class MessageManagerImpl implements MessageManager {
      * Log le message avec le bon niveau
      *
      * @param msg      message a logger
-     * @param logLevel niveau souhaité
+     * @param logLevel niveau souhaitÃ©
      */
     private void resolveLevelAndLog(String msg, LogLevel logLevel) {
         switch (logLevel) {

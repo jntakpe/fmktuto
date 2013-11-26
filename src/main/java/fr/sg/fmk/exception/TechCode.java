@@ -11,16 +11,16 @@ import org.springframework.dao.OptimisticLockingFailureException;
 public enum TechCode implements ErrorCode {
 
     /**
-     * Exception levée en cas de violation de contrainte
+     * Exception levÃ©e en cas de violation de contrainte
      */
     CONSTRAINT_VIOLATION(DataIntegrityViolationException.class),
     /**
-     * Exception levée en cas de modification concurrente
+     * Exception levÃ©e en cas de modification concurrente
      */
     OPTIMISTIC_LOCKING(OptimisticLockingFailureException.class);
 
     /**
-     * Classe de l'exception levée
+     * Classe de l'exception levÃ©e
      */
     private final Class<?> sourceException;
 

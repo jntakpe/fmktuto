@@ -1,14 +1,14 @@
 package fr.sg.fmk.constant;
 
 /**
- * Différents formats des valeurs de paramétrage
+ * DiffÃ©rents formats des valeurs de paramÃ©trage
  *
  * @author jntakpe
  */
 public enum Format {
     //Date
     D,
-    //Numérique
+    //NumÃ©rique
     N,
     //String
     X

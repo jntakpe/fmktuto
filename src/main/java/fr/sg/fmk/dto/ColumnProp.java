@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Propriété d'une colonne de table DataTables
+ * PropriÃ©tÃ© d'une colonne de table DataTables
  *
  * @author jntakpe
  */
@@ -23,7 +23,7 @@ public final class ColumnProp {
     private final boolean sortable;
 
     /**
-     * Colonne triée
+     * Colonne triÃ©e
      */
     private boolean sorted;
 
@@ -33,7 +33,7 @@ public final class ColumnProp {
     private final boolean filterable;
 
     /**
-     * Colonne filtrée
+     * Colonne filtrÃ©e
      */
     private boolean filtered;
 
@@ -48,7 +48,7 @@ public final class ColumnProp {
     private Sort.Direction sortDirection;
 
     /**
-     * Constructeur privée appelé par la méthode statique de build
+     * Constructeur privÃ© appelÃ© par la mÃ©thode statique de build
      * @param name nom de la colonne
      * @param sortable colonne triable
      * @param filterable colonne filtrable
@@ -62,10 +62,10 @@ public final class ColumnProp {
     }
 
     /**
-     * Méthode statique de création d'instance
-     * @param request requête envoyée par DataTables
+     * MÃ©thode statique de crÃ©ation d'instance
+     * @param request requÃªte envoyÃ©e par DataTables
      * @param idx index de la colonne
-     * @return l'instance initialisée
+     * @return l'instance initialisÃ©e
      */
     public static ColumnProp newInstance(HttpServletRequest request, int idx) {
         String name = request.getParameter(DTRequest.M_DATA_PROP.getParam() + idx);

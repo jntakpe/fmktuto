@@ -1,7 +1,7 @@
 package fr.sg.fmk.exception;
 
 /**
- * Exceptions gérées par le framework.
+ * Exceptions gÃ©rÃ©es par le framework.
  *
  * @author jntakpe
  */
@@ -14,7 +14,7 @@ public abstract class FmkException extends RuntimeException {
 
 
     /**
-     * Constructeur permettant la création d'une exception gérée par le framework
+     * Constructeur permettant la crÃ©ation d'une exception gÃ©rÃ©e par le framework
      *
      * @param message   message de l'exception
      * @param errorCode code d'erreur
@@ -25,8 +25,8 @@ public abstract class FmkException extends RuntimeException {
     }
 
     /**
-     * Constructeur permettant la création d'un exception gérée par le framework en gardant la cause ayant provoqué la
-     * levée de l'exception
+     * Constructeur permettant la crÃ©ation d'un exception gÃ©rÃ©e par le framework en gardant la cause ayant provoquÃ© la
+     * levÃ©e de l'exception
      *
      * @param e         exception d'origine
      * @param message   message de l'exception

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Contrôleur de l'écran de paramétrage
+ * ContrÃ´leur de l'Ã©cran de paramÃ©trage
  *
  * @author jntakpe
  */
@@ -29,10 +29,10 @@ public class ParameterController extends GenericController<Parameter> {
     private ParameterService parameterService;
 
     /**
-     * Initialise le cache stocké en session storage
+     * Initialise le cache stockÃ© en session storage
      *
-     * @param codes codes demandés par le cache JS
-     * @return ResponseMessage contenant les codes demandés
+     * @param codes codes demandÃ©s par le cache JS
+     * @return ResponseMessage contenant les codes demandÃ©s
      */
     @RequestMapping(value = "/cache", method = RequestMethod.GET)
     @ResponseBody

@@ -5,7 +5,7 @@ import fr.sg.fmk.constant.Format;
 import javax.persistence.*;
 
 /**
- * Entité représentant un paramètre
+ * EntitÃ© reprÃ©sentant un paramÃ¨tre
  *
  * @author jntakpe
  */

@@ -2,17 +2,17 @@ package fr.sg.fmk.exception;
 
 
 /**
- * Exception encapsulant les exceptions métier du framework
+ * Exception encapsulant les exceptions mÃ©tier du framework
  *
  * @author jntakpe
  */
 public final class BusinessException extends FmkException {
 
     /**
-     * Constructeur d'exception métier
+     * Constructeur d'exception mÃ©tier
      *
      * @param message      message de l'exception
-     * @param businessCode code d'erreur métier
+     * @param businessCode code d'erreur mÃ©tier
      */
     public BusinessException(String message, BusinessCode businessCode) {
         super(message, businessCode);

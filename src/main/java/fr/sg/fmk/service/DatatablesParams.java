@@ -3,7 +3,7 @@ package fr.sg.fmk.service;
 import java.lang.annotation.*;
 
 /**
- * Annotation permettant à Spring de binder les paramètres envoyés par DataTables avec l'objet
+ * Annotation permettant Ã  Spring de binder les paramÃ¨tres envoyÃ©s par DataTables avec l'objet
  * {@link fr.sg.fmk.dto.DatatablesRequest}.
  *
  * @author jntakpe

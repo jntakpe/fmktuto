@@ -2,11 +2,9 @@ package fr.sg.fmk.service;
 
 import fr.sg.fmk.constant.LogLevel;
 import fr.sg.fmk.exception.ErrorCode;
-import fr.sg.fmk.constant.LogLevel;
-import fr.sg.fmk.exception.ErrorCode;
 
 /**
- * Récupération des messages via des différents messages bundles
+ * RÃ©cupÃ©ration des messages via des diffÃ©rents messages bundles
  *
  * @author cegiraud
  * @author jntakpe
@@ -14,40 +12,40 @@ import fr.sg.fmk.exception.ErrorCode;
 public interface MessageManager {
 
     /**
-     * Récupère un message d'erreur dans les bundles de l'application et remplace les variables
+     * RÃ©cupÃ¨re un message d'erreur dans les bundles de l'application et remplace les variables
      *
      * @param codeMessage code du message
-     * @param args        paramètres du message
-     * @return le message completé
+     * @param args        paramÃ¨tres du message
+     * @return le message completÃ©
      */
     String getMessage(String codeMessage, Object... args);
 
     /**
-     * Récupère un message d'erreur dans les bundles de l'application et remplace les variables
+     * RÃ©cupÃ¨re un message d'erreur dans les bundles de l'application et remplace les variables
      *
-     * @param errorCode code du message correspondant à un code erreur
-     * @param args      paramètres du message
-     * @return le message completé
+     * @param errorCode code du message correspondant Ã  un code erreur
+     * @param args      paramÃ¨tres du message
+     * @return le message completÃ©
      */
     String getMessage(ErrorCode errorCode, Object... args);
 
     /**
-     * Log un message d'erreur récupéré dans un des bundles de l'application
+     * Log un message d'erreur rÃ©cupÃ©rÃ© dans un des bundles de l'application
      *
      * @param codeMessage code du message
      * @param logLevel    niveau de log
-     * @param args        paramètres du message
-     * @return le message completé
+     * @param args        paramÃ¨tres du message
+     * @return le message completÃ©
      */
     String logMessage(String codeMessage, LogLevel logLevel, Object... args);
 
     /**
-     * Log un message d'erreur récupéré dans un des bundles de l'application
+     * Log un message d'erreur rÃ©cupÃ©rÃ© dans un des bundles de l'application
      *
-     * @param errorCode code du message correspondant à un code erreur
+     * @param errorCode code du message correspondant Ã  un code erreur
      * @param logLevel  niveau de log
-     * @param args      paramètres du message
-     * @return le message completé
+     * @param args      paramÃ¨tres du message
+     * @return le message completÃ©
      */
     String logMessage(ErrorCode errorCode, LogLevel logLevel, Object... args);
 }

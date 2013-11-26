@@ -3,17 +3,13 @@ package fr.sg.fmk.service.impl;
 import fr.sg.fmk.domain.Parameter;
 import fr.sg.fmk.repository.FmkRepository;
 import fr.sg.fmk.repository.ParameterRepository;
-import fr.sg.fmk.domain.Parameter;
-import fr.sg.fmk.repository.ParameterRepository;
 import fr.sg.fmk.service.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implémentation des services associés à l'entité {@link fr.sg.fmk.domain.Parameter}
+ * ImplÃ©mentation des services associÃ©s Ã  l'entitÃ© {@link fr.sg.fmk.domain.Parameter}
  *
  * @author jntakpe
  * @see GenericServiceImpl

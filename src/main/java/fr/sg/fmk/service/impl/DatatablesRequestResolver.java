@@ -11,8 +11,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Mapper entre le JSON envoyé par Datatables et l'objet {@link fr.sg.fmk.dto.DatatablesRequest}.
- * Pour que la mapping soit effectué l'annotation {@code DatatablesParams} doit être présente avant la
+ * Mapper entre le JSON envoyÃ© par Datatables et l'objet {@link fr.sg.fmk.dto.DatatablesRequest}.
+ * Pour que la mapping soit effectuÃ© l'annotation {@code DatatablesParams} doit Ãªtre prÃ©sente avant la
  * {@code DatatablesRequest} a binder.
  *
  * @author jntakpe

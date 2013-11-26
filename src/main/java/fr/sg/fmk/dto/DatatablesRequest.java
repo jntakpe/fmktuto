@@ -9,24 +9,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Wrapper mappant les propriétés d'une table DataTables
+ * Wrapper mappant les propriÃ©tÃ©s d'une table DataTables
  *
  * @author jntakpe
  */
 public final class DatatablesRequest {
 
     /**
-     * Numéro de la première donnée de la page à afficher
+     * NumÃ©ro de la premiÃ¨re donnÃ©e de la page Ã  afficher
      */
     private Integer displayStart;
 
     /**
-     * Nombre de données par page
+     * Nombre de donnÃ©es par page
      */
     private Integer displaySize;
 
     /**
-     * Proprietés d'une colonne
+     * ProprietÃ©s d'une colonne
      */
     private List<ColumnProp> columnProps;
 
@@ -47,12 +47,12 @@ public final class DatatablesRequest {
     }
 
     /**
-     * Constructeur appelé par le méthode de création d'instance
+     * Constructeur appelÃ© par le mÃ©thode de crÃ©ation d'instance
      * {@link DatatablesRequest#buildInstance(javax.servlet.http.HttpServletRequest)}
      *
-     * @param displayStart       numéro de la première donnée de la page à afficher
-     * @param displaySize        nombre de données par page
-     * @param columnProps        proprietés d'une colonne
+     * @param displayStart       numÃ©ro de la premiÃ¨re donnÃ©e de la page Ã  afficher
+     * @param displaySize        nombre de donnÃ©es par page
+     * @param columnProps        proprietÃ©s d'une colonne
      * @param callCounter        compteur d'appels
      * @param search             champ de recherche global
      */
@@ -66,10 +66,10 @@ public final class DatatablesRequest {
     }
 
     /**
-     * Méthode de création de l'instance
+     * MÃ©thode de crÃ©ation de l'instance
      *
-     * @param request requête envoyé par DataTables
-     * @return instance initialisée
+     * @param request requÃªte envoyÃ©e par DataTables
+     * @return instance initialisÃ©e
      */
     public static DatatablesRequest buildInstance(HttpServletRequest request) {
         if (request == null) return null;
@@ -105,9 +105,9 @@ public final class DatatablesRequest {
     }
 
     /**
-     * Indique si une colonne est triée
+     * Indique si une colonne est triÃ©e
      *
-     * @return true si une colonne est triée
+     * @return true si une colonne est triÃ©e
      */
     public final boolean hasSortedColumn() {
         for (ColumnProp columnProp : columnProps)
@@ -116,9 +116,9 @@ public final class DatatablesRequest {
     }
 
     /**
-     * Indique si une colonne est filtrée
+     * Indique si une colonne est filtrÃ©e
      *
-     * @return true si une colonne est filtrée
+     * @return true si une colonne est filtrÃ©e
      */
     public final boolean hasFilteredColumn() {
         for (ColumnProp columnProp : columnProps)

@@ -1,6 +1,5 @@
 package fr.sg.fmk.web;
 
-import fr.sg.fmk.util.FmkUtils;
 import fr.sg.fmk.service.MessageManager;
 import fr.sg.fmk.util.FmkUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Contrôleur des écrans gérés dirrectement par le framework
+ * ContrÃ´leur des Ã©crans gÃ©rÃ©s dirrectement par le framework
  *
  * @author jntakpe
  */
@@ -23,16 +22,16 @@ import javax.servlet.http.HttpServletRequest;
 public class FmkController {
 
     /**
-     * Rôle minimum pour authentifier un utilisateur
+     * RÃ´le minimum pour authentifier un utilisateur
      */
     public static final String BASIC_ROLE = "ROLE_USER";
     @Autowired
     private MessageManager messageManager;
 
     /**
-     * Affiche l'écran d'accueil
+     * Affiche l'Ã©cran d'accueil
      *
-     * @return uri de l'écran d'accueil
+     * @return uri de l'Ã©cran d'accueil
      */
     @RequestMapping(value = {"/portal", "/"}, method = RequestMethod.GET)
     public String portal() {
@@ -40,12 +39,12 @@ public class FmkController {
     }
 
     /**
-     * Si l'utilisateur est connecté renvoi vers le portail sinon renvoi vers la page de connexion en ajoutant un
+     * Si l'utilisateur est connectÃ© renvoi vers le portail sinon renvoi vers la page de connexion en ajoutant un
      * message d'erreur
      *
-     * @param request requête http
-     * @param error   cause de l'échec de l'authentification
-     * @return vue à afficher
+     * @param request requÃªte http
+     * @param error   cause de l'Ã©chec de l'authentification
+     * @return vue Ã  afficher
      */
     @RequestMapping(value = "/connexion", method = RequestMethod.GET)
     public ModelAndView connexion(HttpServletRequest request, @RequestParam(required = false) String error) {
@@ -67,9 +66,9 @@ public class FmkController {
     }
 
     /**
-     * Affiche l'écran d'erreur
+     * Affiche l'Ã©cran d'erreur
      *
-     * @return uri de l'écran d'erreur
+     * @return uri de l'Ã©cran d'erreur
      */
     @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String error() {

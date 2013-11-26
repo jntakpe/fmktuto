@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Classe à étendre pour la création d'entités.
- * Toute classe fille doit absolument implémenter son propre générateur de séquence.
+ * Classe Ã  Ã©tendre pour la crÃ©ation d'entitÃ©s.
+ * Toute classe fille doit absolument implÃ©menter son propre gÃ©nÃ©rateur de sÃ©quence.
  *
  * @author jntakpe
  */
@@ -13,14 +13,14 @@ import java.io.Serializable;
 public abstract class GenericDomain implements Serializable {
 
     /**
-     * Clé primaire et technique de toutes les entités étendant cette classe
+     * ClÃ© primaire et technique de toutes les entitÃ©s Ã©tendant cette classe
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SG")
     private Long id;
 
     /**
-     * Version permettant de détecter les modifications concurrentes
+     * Version permettant de dÃ©tecter les modifications concurrentes
      */
     @Version
     private Integer version;

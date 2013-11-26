@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * Implémentation des services usuels
+ * ImplÃ©mentation des services usuels
  *
  * @author jntakpe
  */
@@ -45,9 +45,9 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     protected MessageManager messageManager;
 
     /**
-     * Renvoi le repository à utiliser pour requêter la base de données
+     * Renvoi le repository Ã  utiliser pour requÃªter la base de donnÃ©es
      *
-     * @return le repository à utiliser
+     * @return le repository Ã  utiliser
      */
     public abstract FmkRepository<T> getRepository();
 
@@ -155,12 +155,12 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
 
 
     /**
-     * Construit un prédicat de filtrage l'aide des paramètres envoyés par DataTables.
-     * Par défaut recherche pour chaque champ de recherche renseigné une requête de type :
+     * Construit un prÃ©dicat de filtrage l'aide des paramÃ¨tres envoyÃ©s par DataTables.
+     * Par dÃ©faut recherche pour chaque champ de recherche renseignÃ© une requÃªte de type :
      * SELECT * FROM table WHERE UPPER(champ1) LIKE('%' + valeur1 + '%') AND UPPER(champ2) LIKE('%' + valeur2 + '%').
-     * Doit être étendue si la recherche par défaut ne convient pas.
+     * Doit Ãªtre Ã©tendue si la recherche par dÃ©faut ne convient pas.
      *
-     * @param datatablesRequest état de la liste DataTables
+     * @param datatablesRequest Ã©tat de la liste DataTables
      * @return predicat contenant les termes de la recherche
      * @see <a href="http://www.querydsl.com/static/querydsl/2.1.0/reference/html/ch03.html">QueryDSL doc</a>
      */
@@ -176,9 +176,9 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     }
 
     /**
-     * Construit un objet utilisé pour faire une requête de pagination et de tri.
+     * Construit un objet utilisÃ© pour faire une requÃªte de pagination et de tri.
      *
-     * @param dr état de la liste DataTables
+     * @param dr Ã©tat de la liste DataTables
      * @return Objet contenant les informations de pagination
      * @see <a href="http://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html#web-pagination">Web pagination</a>
      */
@@ -190,10 +190,10 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     }
 
     /**
-     * Renvoi un objet contenant les propriétés de tri des colonnes
+     * Renvoi un objet contenant les propriÃ©tÃ©s de tri des colonnes
      *
-     * @param columnProps propriétés de chaque colonne
-     * @return propriétés de tri des colonnes
+     * @param columnProps propriÃ©tÃ©s de chaque colonne
+     * @return propriÃ©tÃ©s de tri des colonnes
      */
     private Sort resolveSort(List<ColumnProp> columnProps) {
         List<Sort.Order> orders = new ArrayList<Sort.Order>();
@@ -203,9 +203,9 @@ public abstract class GenericServiceImpl<T extends GenericDomain> implements Gen
     }
 
     /**
-     * Méthode renvoyant l'entité de la couche domain/model
+     * MÃ©thode renvoyant l'entitÃ© de la couche domain/model
      *
-     * @return ressource utilisée par le contrôlleur
+     * @return ressource utilisÃ©e par le contrÃ´lleur
      */
     private Class<T> getDomainClass() {
         ParameterizedType genericSuperclass = ((ParameterizedType) this.getClass().getGenericSuperclass());

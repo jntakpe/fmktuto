@@ -1,7 +1,7 @@
 package fr.sg.fmk.constant;
 
 /**
- * Enumération des différents niveau de logging possibles
+ * EnumÃ©ration des diffÃ©rents niveau de logging possibles
  *
  * @author jntakpe
  */

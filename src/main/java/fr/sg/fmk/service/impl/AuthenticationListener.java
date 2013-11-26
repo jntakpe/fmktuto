@@ -2,7 +2,6 @@ package fr.sg.fmk.service.impl;
 
 import fr.sg.fmk.constant.LogLevel;
 import fr.sg.fmk.service.MessageManager;
-import org.joda.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
@@ -25,7 +24,7 @@ public class AuthenticationListener implements ApplicationListener<Authenticatio
 
 
     /**
-     * Méthode appellée à chaque login d'un utilisateur
+     * MÃ©thode appellÃ©e Ã  chaque login d'un utilisateur
      */
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
