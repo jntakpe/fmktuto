@@ -44,7 +44,7 @@ public abstract class GenericController<T extends GenericDomain> {
     /**
      * Affiche la page liste
      *
-     * @return le chemin de la page � afficher. Pour modifier le nom de la vue de la liste � afficher,
+     * @return le chemin de la page à afficher. Pour modifier le nom de la vue de la liste à afficher,
      *         veuillez utiliser {@link fr.sg.fmk.web.GenericController#getListViewPath()}
      */
     @RequestMapping(method = RequestMethod.GET)
@@ -159,7 +159,6 @@ public abstract class GenericController<T extends GenericDomain> {
     public ModelAndView delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView(getRedirectListView());
         T domain = getService().findOne(id);
-        domain = null;
         if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
         getService().delete(domain);
         messageManager.logMessage("MSG00003", LogLevel.INFO, FmkUtils.getCurrentUsername(), domain);
@@ -171,7 +170,7 @@ public abstract class GenericController<T extends GenericDomain> {
     /**
      * Supprime l'entité correspondante à l'identifiant lors d'un appel AJAX.
      * L'entité sera supprimée côté serveur (Database).
-     * Le client(JavaScript) se chargera de la suppression de l'entit� dans la table.
+     * Le client(JavaScript) se chargera de la suppression de l'entité dans la table.
      *
      * @param id identifiant de l'élément à supprimer
      * @return message indiquant le résultat de la suppression
