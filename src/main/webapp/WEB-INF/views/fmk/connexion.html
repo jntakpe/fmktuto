@@ -15,13 +15,13 @@
     <![endif]-->
     <div id="connexion-container">
         <div class="row" style="background-color: #FBFBFB">
-            <div class="alert alert-danger fade in" th:if="${error != null}">
+            <div class="alert alert-danger collapse in" th:if="${error != null}">
                 <i class="fa fa-warning"></i>
                 <span th:text="${authentMsg}"/>
                 <button type="button" class="close">&times;</button>
             </div>
             <div th:if="${responseMessage != null}"
-                 th:class="${responseMessage.success} ? 'alert alert-success fade in' : 'alert alert-danger fade in'">
+                 th:class="${responseMessage.success} ? 'alert alert-success collapse in' : 'alert alert-danger collapse in'">
                 <i id="alert-icon"
                    th:class="${responseMessage.success} ? 'fa fa-check' : 'fa fa-warning'"></i>
                 <span id="alert-message" th:text="${responseMessage.message}"/>

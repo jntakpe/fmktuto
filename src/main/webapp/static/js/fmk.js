@@ -136,7 +136,7 @@ var fmk = {
         if (!alertIcon.hasClass('fa-check')) {
             alertIcon.addClass('fa fa-check');
         }
-        alertDiv.addClass('in'); //Fait apparaitre l'alert
+        alertDiv.addClass('in'); //Fait apparaitre l'alerte
         fmk.currentTimeout = window.setTimeout(function () { //Fait disparaitre l'alerte au bout d'un certain temps
             alertDiv.removeClass('in');
         }, fmk.getParamValue(fmk.parameters.defaultTimeout));
