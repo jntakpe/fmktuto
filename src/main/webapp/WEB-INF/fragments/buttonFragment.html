@@ -4,20 +4,22 @@
 <body>
 
 <!-- form -->
-<div th:fragment="formButtonsFragment" class="form-actions clear">
-    <button type="submit" class="btn btn-success">
-        <i class="fa fa-check"></i>
-        <span th:text="#{btn.valid} "></span>
-    </button>
-    <button type="reset" class="btn btn-warning">
-        <i class="fa fa-eraser"></i>
-        <span th:text="#{btn.reset}"></span>
-    </button>
+<div th:fragment="formButtonsFragment" class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-check"></i>
+            <span th:text="#{btn.valid} "></span>
+        </button>
+        <button type="reset" class="btn btn-warning">
+            <i class="fa fa-eraser"></i>
+            <span th:text="#{btn.reset}"></span>
+        </button>
 
-    <button type="button" class="btn btn-primary pull-right" onclick="fmk.back()">
-        <span th:text="#{btn.back}"></span>
-        <i class="fa fa-arrow-right"></i>
-    </button>
+        <button type="button" class="btn btn-primary pull-right" onclick="fmk.back()">
+            <span th:text="#{btn.back}"></span>
+            <i class="fa fa-arrow-right"></i>
+        </button>
+    </div>
 </div>
 
 <!-- Nouveau detail -->

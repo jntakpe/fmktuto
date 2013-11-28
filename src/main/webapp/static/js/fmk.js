@@ -477,9 +477,20 @@ var fmk = {
                 $input.val(value);
             }
         });
+    },
+
+    /**
+     * Retourne à la page précédente de l'url
+     */
+    back: function () {
+        "use strict";
+        window.location.pathname = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"));
     }
 };
 
+/**
+ * jQuery
+ */
 $(function () {
     "use strict";
     var $alert = $('#alert'), $wrapTable = $('table.wrap'), $autoSearch = $('.auto-search');
@@ -573,6 +584,7 @@ $(function () {
         dataTable.fnMultiFilter(searchData);
     });
 
+    //Reset la recherche (retour de la liste dans l'état initial)
     $('.reset-search').click(function () {
         var dataTable, tableId, $dt, $search = $(this).closest('.click-search');
         tableId = $search.data('table-id');

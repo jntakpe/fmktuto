@@ -8,42 +8,67 @@
         <div th:include="../fragments/alertFragment :: alert"></div>
         <h1 th:text="${domain.id == null} ? #{personne.detail.create.title} : #{personne.detail.edit.title}"></h1>
 
-        <form role="form" class="form-horizontal" th:action="@{/personne}" th:object="${domain}" method="post">
+        <form id="personne-form" role="form" class="form-horizontal" th:action="@{/personne}" th:object="${domain}"
+              method="post">
             <fieldset>
-                <legend th:text="${personne.form.legend}"></legend>
+                <legend th:text="#{personne.form.legend}"></legend>
+                <input type="hidden" id="id" th:field="*{id}" />
+                <input type="hidden" id="version" th:field="*{version}" />
                 <div class="form-group">
                     <label for="nom" class="col-md-2 control-label" th:text="#{personne.nom}"></label>
+
                     <div class="col-md-6">
-                        <input type="text" id="nom" class="form-control" th:placeholder="#{personne.nom}" />
+                        <input type="text" id="nom" class="form-control" th:field="*{nom}"
+                               th:placeholder="#{personne.nom}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="nom" class="col-md-2 control-label" th:text="#{personne.prenom}"></label>
+
                     <div class="col-md-6">
-                        <input type="text" id="prenom" class="form-control" th:placeholder="#{personne.prenom}" />
+                        <input type="text" id="prenom" class="form-control" th:field="*{prenom}"
+                               th:placeholder="#{personne.prenom}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-md-2 control-label" th:text="#{personne.email}"></label>
+
                     <div class="col-md-6">
-                        <input type="email" id="email" class="form-control" th:placeholder="#{personne.email}" />
+                        <input type="email" id="email" class="form-control" th:field="*{email}"
+                               th:placeholder="#{personne.email}"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="telephone" class="col-md-2 control-label" th:text="#{personne.telephone}"></label>
+
                     <div class="col-md-6">
-                        <input type="number" id="telephone" class="form-control" th:placeholder="#{personne.telephone}" />
+                        <input type="text" id="telephone" class="form-control" th:field="*{telephone}"
+                               th:placeholder="#{personne.telephone}"/>
                     </div>
                 </div>
             </fieldset>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-success" th:text="#{btn.valid}"></button>
-                    <button type="reset" class="btn btn-warning" th:text="#{btn.reset}"></button>
-                </div>
-            </div>
+            <div th:substituteby="../fragments/buttonFragment :: formButtonsFragment"></div>
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    "use strict";
+    $('#personne-form').validate({
+        rules: {
+            nom : {
+                required : true
+            },
+            prenom : {
+                required : true
+            },
+            email : {
+                required: true
+            },
+            telephone : {
+                required : true
+            }
+        }
+    })
+</script>
 </body>
 </html>
