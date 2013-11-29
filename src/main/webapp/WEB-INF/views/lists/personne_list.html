@@ -67,20 +67,18 @@
 <script type="text/javascript">
     $(function () {
         "use strict";
-        fmk.createTable(
-                "dt_personne",
-                {
-                    sAjaxSource: "personne/page",
-                    bServerSide: true,
-                    aoColumns: [
-                        {mData: "nom"},
-                        {mData: "prenom"},
-                        {mData: "telephone"},
-                        {mData: "email"},
-                        fmk.detailCol(),
-                        fmk.deleteCol()
-                    ]
-                });
+        $('#dt_personne').fmkTable({
+            sAjaxSource: "personne/page",
+            bServerSide: true,
+            aoColumns: [
+                {mData: "nom"},
+                {mData: "prenom"},
+                {mData: "telephone"},
+                {mData: "email"},
+                fmk.detailCol(),
+                fmk.deleteCol()
+            ]
+        });
     });
 </script>
 </body>

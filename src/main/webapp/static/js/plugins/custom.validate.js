@@ -15,11 +15,14 @@ function ValidUnicity(field, id, value) {
     this.value = value;
 }
 
-/** Modification pour le plugin jQuery validation afin de respecter le theme Bootstrap */
+/** Modification pour le plugin jQuery validation afin de respecter le theme Bootstrap et paramétrage par défaut*/
 $.validator.setDefaults({
     errorClass: 'help-block',
     errorElement: 'span',
     validClass: 'has-success',
+    onfocusout: function (element) { //Force la validation dès que l'on sort du champ
+        $(element).valid();
+    },
     highlight: function (element, errorClass, validClass) {
         "use strict";
         var $element;

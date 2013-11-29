@@ -52,23 +52,25 @@
     </div>
 </div>
 <script type="text/javascript">
-    "use strict";
-    $('#personne-form').validate({
-        rules: {
-            nom : {
-                required : true
-            },
-            prenom : {
-                required : true
-            },
-            email : {
-                required: true
-            },
-            telephone : {
-                required : true
+    $(function () {
+        "use strict";
+        $('#personne-form').fmkValid({
+            rules: {
+                nom: {
+                    required: true
+                },
+                prenom: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                telephone: {
+                    required: true
+                }
             }
-        }
-    })
+        });
+    });
 </script>
 </body>
 </html>

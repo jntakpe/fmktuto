@@ -52,7 +52,7 @@ var fmk = {
     },
 
     /**
-     * Récupère la valeur d'un élément mis en cache
+     * Récupère la valeur d'un élément mise en cache
      * @param code élément à récupérer en cache
      * @returns {*}
      */
@@ -194,44 +194,6 @@ var fmk = {
                 id: domainIdVal
             }
         };
-    },
-
-    /**
-     * Créée une table gérée par le framework puis stocke une référence de la table en avec jQuery.data.
-     * Peut aussi initialiser la validation de la popup.
-     * @param id identifiant de la table
-     * @param dtOptions paramètres de la table
-     * @param [validRules] paramètres de validation de la popup
-     */
-    createTable: function (id, dtOptions, validRules) {
-        "use strict";
-        var $popup, dataTable, $popupForm, $popupSubmit, $table = $('#' + id);
-        if (!$table.length) {
-            throw "L'identifiant de la table est incorrect.";
-        }
-        if (dtOptions.bServerSide && !dtOptions.sAjaxDataProp) {
-            dtOptions.sAjaxDataProp = "aaData"; //En cas de server-side, on wrap les données dans le champ aaData
-        }
-        dataTable = $table.dataTable(dtOptions); //Création de la dataTables
-        $popup = $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId));
-        if ($popup.length) { //Si les règles de validation existent
-            $popupForm = $popup.find('form');
-            $popupSubmit = $popup.find('.modal-footer :submit');
-            if (!$popupSubmit.attr('form')) {
-                $popupSubmit.attr('form', $popupForm.attr('id'));
-            }
-            if ($popupForm.length === 1) {
-                $popupForm.data('validForm', $popupForm.validate({ //Initialisation de la validation
-                    submitHandler: function (form) {
-                        fmk.saveRow(form, dataTable, $table);
-                    },
-                    rules: validRules
-                }));
-            } else {
-                throw "Formulaire de la popup : '" + $popup.attr('id') + "' introuvable";
-            }
-        }
-        $table.data('dt', dataTable); //On stocke une référence vers l'objet 'dataTable'
     },
 
     /**
@@ -496,6 +458,55 @@ $(function () {
     var $alert = $('#alert'), $wrapTable = $('table.wrap'), $autoSearch = $('.auto-search');
 
     /**
+     * Extensions de jQuery
+     */
+    $.fn.extend({
+
+        /**
+         * Créé une table gérée par le framework puis stocke une référence de la table en avec jQuery.data.
+         * Peut aussi initialiser la validation de la popup.
+         * @param dtOptions paramètres de la table (voir http://datatables.net/ref)
+         * @param [validRules] paramètres de validation de la popup (voir http://jqueryvalidation.org/category/plugin/)
+         */
+        fmkTable: function (dtOptions, validRules) {
+            "use strict";
+            var $popup, dataTable, $popupForm, $popupSubmit;
+            if (dtOptions.bServerSide && !dtOptions.sAjaxDataProp) {
+                dtOptions.sAjaxDataProp = "aaData"; //En cas de server-side, on wrap les données dans le champ aaData
+            }
+            dataTable = this.dataTable(dtOptions); //Création de la dataTables
+            $popup = $('#' + fmk.getTableAttr(this, fmk.tableAttributes.editPopupId));
+            if ($popup.length) { //Si les règles de validation existent
+                $popupForm = $popup.find('form');
+                $popupSubmit = $popup.find('.modal-footer :submit');
+                if (!$popupSubmit.attr('form')) {
+                    $popupSubmit.attr('form', $popupForm.attr('id'));
+                }
+                if ($popupForm.length === 1) {
+                    $popupForm.data('validForm', $popupForm.validate({ //Initialisation de la validation
+                        submitHandler: function (form) {
+                            fmk.saveRow(form, dataTable, this);
+                        },
+                        rules: validRules
+                    }));
+                } else {
+                    throw "Formulaire de la popup : '" + $popup.attr('id') + "' introuvable";
+                }
+            }
+            this.data('dt', dataTable); //On stocke une référence vers l'objet 'dataTable'
+        },
+
+        /**
+         * Validation d'un formulaire géré par le framework.
+         * @param validOptions options de validation (voir http://jqueryvalidation.org/category/plugin/)
+         */
+        fmkValid : function (validOptions) {
+            this.data('validForm', this.validate(validOptions));
+        }
+    });
+
+
+    /**
      * Gestion des recherches
      */
     function searchHandler() {
@@ -611,8 +622,15 @@ $(function () {
     $('.modal.edit-popup').on('hide.bs.modal', function () {
         var $form = $(this).find('form');
         $form.data('validForm').resetForm(); //Nettoie le formulaire au niveau validation
-        $form.find('.has-error').removeClass('has-error'); //Enlève les inputs en erreur
+        $form.find('.has-error').removeClass('has-error'); //Enlève les inputs en erreur au niveau CSS
         $form.find(":hidden").val('');
+    });
+
+    //Reset aussi la validation si on reset le form
+    $(":reset").click(function () {
+        var $form = $(this).closest('form');
+        $form.data('validForm').resetForm(); //Nettoie le formulaire au niveau validation
+        $form.find('.has-error').removeClass('has-error'); //Enlève les inputs en erreur au niveau CSS
     });
 
     //Gestion des erreurs centralisée
