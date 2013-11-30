@@ -4,6 +4,7 @@ import fr.sg.fmk.domain.GenericDomain;
 
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Digits;
 
 /**
  * @author jntakpe
@@ -16,6 +17,7 @@ public class Personne extends GenericDomain {
 
     private String prenom;
 
+    @Digits(integer = 10, fraction = 0)
     private String telephone;
 
     private String email;

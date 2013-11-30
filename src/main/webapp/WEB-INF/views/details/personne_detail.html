@@ -6,44 +6,48 @@
 <div class="container">
     <div class="row">
         <div th:include="../fragments/alertFragment :: alert"></div>
-        <h1 th:text="${domain.id == null} ? #{personne.detail.create.title} : #{personne.detail.edit.title}"></h1>
+        <h1 th:text="${personne.id == null} ? #{personne.detail.create.title} : #{personne.detail.edit.title}"></h1>
 
-        <form id="personne-form" role="form" class="form-horizontal" th:action="@{/personne}" th:object="${domain}"
+        <form id="personne-form" role="form" class="form-horizontal" th:action="@{/personne}" th:object="${personne}"
               method="post">
             <fieldset>
                 <legend th:text="#{personne.form.legend}"></legend>
-                <input type="hidden" id="id" th:field="*{id}" />
-                <input type="hidden" id="version" th:field="*{version}" />
-                <div class="form-group">
-                    <label for="nom" class="col-md-2 control-label" th:text="#{personne.nom}"></label>
+                <input type="hidden" id="id" th:field="*{id}"/>
+                <input type="hidden" id="version" th:field="*{version}"/>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('nom')} ? 'has-error'">
+                    <label class="col-md-2 control-label" th:text="#{personne.nom}"></label>
 
                     <div class="col-md-6">
-                        <input type="text" id="nom" class="form-control" th:field="*{nom}"
-                               th:placeholder="#{personne.nom}"/>
+                        <input type="text" class="form-control" th:field="*{nom}" th:placeholder="#{personne.nom}"/>
+                        <span class="help-block" th:errors="*{nom}"></span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="nom" class="col-md-2 control-label" th:text="#{personne.prenom}"></label>
+                <div class="form-group" th:classappend="${#fields.hasErrors('prenom')} ? 'has-error'">
+                    <label class="col-md-2 control-label" th:text="#{personne.prenom}"></label>
 
                     <div class="col-md-6">
-                        <input type="text" id="prenom" class="form-control" th:field="*{prenom}"
+                        <input type="text" class="form-control" th:field="*{prenom}"
                                th:placeholder="#{personne.prenom}"/>
+                        <span class="help-block" th:errors="*{prenom}"></span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="email" class="col-md-2 control-label" th:text="#{personne.email}"></label>
+                <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+                    <label class="col-md-2 control-label" th:text="#{personne.email}"></label>
 
                     <div class="col-md-6">
-                        <input type="email" id="email" class="form-control" th:field="*{email}"
+                        <input type="email" class="form-control" th:field="*{email}"
                                th:placeholder="#{personne.email}"/>
+                        <span class="help-block" th:errors="*{email}"></span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="telephone" class="col-md-2 control-label" th:text="#{personne.telephone}"></label>
+                <div class="form-group" th:classappend="${#fields.hasErrors('telephone')} ? 'has-error'">
+                    <label class="col-md-2 control-label" th:text="#{personne.telephone}"></label>
 
                     <div class="col-md-6">
-                        <input type="text" id="telephone" class="form-control" th:field="*{telephone}"
+                        <input type="text" class="form-control" th:field="*{telephone}"
                                th:placeholder="#{personne.telephone}"/>
+                        <span class="help-block" th:errors="*{telephone}"></span>
                     </div>
                 </div>
             </fieldset>

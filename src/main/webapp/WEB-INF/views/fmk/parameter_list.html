@@ -123,9 +123,7 @@
 <script type="text/javascript">
     $(function () {
         "use strict";
-        fmk.createTable(
-                "dt_parameter",
-                {
+        $('#dt_parameter').fmkTable({
                     sAjaxSource: "param/list",
                     aoColumns: [
                         {mData: "code"},
@@ -154,8 +152,8 @@
                             }
                         }
                     }
-                }
-        );
+                });
+
     });
 </script>
 </body>

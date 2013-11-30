@@ -12,11 +12,13 @@ import fr.sg.fmk.service.MessageManager;
 import fr.sg.fmk.util.FmkUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.lang.reflect.ParameterizedType;
 
 /**
@@ -33,6 +35,7 @@ public abstract class GenericController<T extends GenericDomain> {
      */
     @Autowired
     protected MessageManager messageManager;
+
 
     /**
      * Méthode permettant de récupérer le service à utiliser.
@@ -96,7 +99,7 @@ public abstract class GenericController<T extends GenericDomain> {
      */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public ModelAndView detail() throws Exception {
-        return new ModelAndView(getDetailViewPath()).addObject("domain", getDomainClass().newInstance());
+        return new ModelAndView(getDetailViewPath()).addObject(getDomainClass().newInstance());
     }
 
     /**
@@ -110,22 +113,23 @@ public abstract class GenericController<T extends GenericDomain> {
         ModelAndView mv = new ModelAndView(getDetailViewPath());
         T domain = getService().findOne(id);
         if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
-        return mv.addObject("domain", domain);
+        return mv.addObject(domain);
     }
 
     /**
      * Créé ou modifie l'entité (utilisé pour les appels non-AJAX)
      *
      * @param domain             entité à sauvegarder
-     * @param redirectAttributes attributs de redirection lus sur la page suivante
+     * @param redir attributs de redirection lus sur la page suivante
      * @return page à afficher
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(@ModelAttribute T domain, RedirectAttributes redirectAttributes) {
+    public ModelAndView save(@Valid T domain, BindingResult result, RedirectAttributes redir) {
+        if (result.hasErrors()) return new ModelAndView(getDetailViewPath());
         boolean isNew = domain.getId() == null;
         T entity = getService().save(domain);
         String msg = messageManager.getMessage(isNew ? "create.success" : "update.success", entity);
-        redirectAttributes.addFlashAttribute(ResponseMessage.getSuccessMessage(msg));
+        redir.addFlashAttribute(ResponseMessage.getSuccessMessage(msg));
         String username = FmkUtils.getCurrentUsername();
         messageManager.logMessage(isNew ? "MSG00001" : "MSG00002", LogLevel.INFO, username, entity);
         return new ModelAndView(getRedirectListView());
