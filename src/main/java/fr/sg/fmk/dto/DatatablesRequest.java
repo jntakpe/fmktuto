@@ -50,11 +50,11 @@ public final class DatatablesRequest {
      * Constructeur appelé par le méthode de création d'instance
      * {@link DatatablesRequest#buildInstance(javax.servlet.http.HttpServletRequest)}
      *
-     * @param displayStart       numéro de la première donnée de la page à afficher
-     * @param displaySize        nombre de données par page
-     * @param columnProps        proprietés d'une colonne
-     * @param callCounter        compteur d'appels
-     * @param search             champ de recherche global
+     * @param displayStart numéro de la première donnée de la page à afficher
+     * @param displaySize  nombre de données par page
+     * @param columnProps  proprietés d'une colonne
+     * @param callCounter  compteur d'appels
+     * @param search       champ de recherche global
      */
     private DatatablesRequest(Integer displayStart, Integer displaySize, List<ColumnProp> columnProps,
                               Integer callCounter, String search) {
@@ -102,6 +102,15 @@ public final class DatatablesRequest {
         }
 
         return new DatatablesRequest(displayStart, displayLength, columnProps, echo, search);
+    }
+
+    /**
+     * Indique si des champs sont renseignés si oui alors la requête doit être traitée
+     *
+     * @return true si des champs sont renseignés
+     */
+    public final boolean isEmpty() {
+        return displaySize == null || displayStart == null;
     }
 
     /**

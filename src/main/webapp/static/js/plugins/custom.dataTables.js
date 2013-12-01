@@ -3,7 +3,6 @@ $.extend(true, $.fn.dataTable.defaults, {
     "bProcessing": true,
     "bRetrieve": true,
     "bDeferRender": true,
-    "sAjaxDataProp": "",
     "iDisplayLength": 15,
     "sDom": "<'row'r>t<'row'<'col-xs-6'i><'col-xs-6'p>>",
     "sPaginationType": "bootstrap",

@@ -301,29 +301,25 @@ var fmk = {
             rowInfos = $table.data('rowInfos'), uri;
         uri = fmk.getTableAttr($table, fmk.tableAttributes.deleteUri);
         uri = uri.match(/\/$/) ? uri + rowInfos.rowId : uri + "/" + rowInfos.rowId;
-        if (!dataTable.fnSettings().oInit.bServerSide) { //Appel AJAX
-            $.ajax({
-                type: 'DELETE',
-                url: uri
-            }).done(
-                function (response) {
-                    $('#confirmDeletePopup').modal('hide'); //On cache la popup de confirmation
-                    if (response.success) {
-                        fmk.displaySuccess(response.message);
-                        if (fmk.getTableAttr($table, fmk.tableAttributes.reload)) { //Si les données sont rechargées
-                            dataTable.fnReloadAjax(); //Rechargement des données
-                        } else {
-                            dataTable.fnDeleteRow(rowInfos.row); //Delete côté client
-                        }
+        $.ajax({
+            type: 'DELETE',
+            url: uri
+        }).done(
+            function (response) {
+                $('#confirmDeletePopup').modal('hide'); //On cache la popup de confirmation
+                if (response.success) {
+                    fmk.displaySuccess(response.message);
+                    if (fmk.getTableAttr($table, fmk.tableAttributes.reload)) { //Si les données sont rechargées
+                        dataTable.fnReloadAjax(); //Rechargement des données
                     } else {
-                        fmk.displayError(response);
-                        dataTable.fnReloadAjax();
+                        dataTable.fnDeleteRow(rowInfos.row); //Delete côté client
                     }
+                } else {
+                    fmk.displayError(response);
+                    dataTable.fnReloadAjax();
                 }
-            );
-        } else { //Appel non-AJAX
-            window.location = uri + "/delete";
-        }
+            }
+        );
     },
 
     /**
@@ -396,37 +392,33 @@ var fmk = {
     saveRow: function (form, dataTable, $table) {
         "use strict";
         var rowInfos;
-        if (!dataTable.fnSettings().oInit.bServerSide) { //Modifications en AJAX
-            $(form).ajaxSubmit({
-                type: 'put',
-                success: function (response) {
-                    if (!response) {
-                        throw "La réponse de la requête de sauvegarde est nulle. Merci de renvoyer un résultat";
-                    }
-                    var responseData = response.data,
-                        $popup = $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId));
-                    if (response.success) {
-                        $popup.modal('hide');
-                        fmk.displaySuccess(response.message);
-                        if (fmk.getTableAttr($table, fmk.tableAttributes.reload)) { //On recharge toutes les données
-                            dataTable.fnReloadAjax();
-                        } else { //On modifie juste la ligne concernée
-                            if ($.isNumeric($(form).find("input[name='id']").val())) {
-                                dataTable.fnDeleteRow($table.data('rowInfos').row);
-                            }
-                            dataTable.fnAddData(response.data);
-                        }
-                    } else if (responseData) {
-                        fmk.populateErrors(form, responseData);
-                    } else {
-                        $popup.modal('hide');
-                        fmk.displayError(response);
-                    }
+        $(form).ajaxSubmit({
+            type: 'put',
+            success: function (response) {
+                if (!response) {
+                    throw "La réponse de la requête de sauvegarde est nulle. Merci de renvoyer un résultat";
                 }
-            });
-        } else { //Envoi du formulaire non-AJAX => rechargement complet de la page
-            $(form).submit();
-        }
+                var responseData = response.data,
+                    $popup = $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId));
+                if (response.success) {
+                    $popup.modal('hide');
+                    fmk.displaySuccess(response.message);
+                    if (fmk.getTableAttr($table, fmk.tableAttributes.reload)) { //On recharge toutes les données
+                        dataTable.fnReloadAjax();
+                    } else { //On modifie juste la ligne concernée
+                        if ($.isNumeric($(form).find("input[name='id']").val())) {
+                            dataTable.fnDeleteRow($table.data('rowInfos').row);
+                        }
+                        dataTable.fnAddData(response.data);
+                    }
+                } else if (responseData) {
+                    fmk.populateErrors(form, responseData);
+                } else {
+                    $popup.modal('hide');
+                    fmk.displayError(response);
+                }
+            }
+        });
     },
 
     /**

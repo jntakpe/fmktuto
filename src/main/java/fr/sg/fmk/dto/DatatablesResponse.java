@@ -3,8 +3,6 @@ package fr.sg.fmk.dto;
 import fr.sg.fmk.domain.GenericDomain;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 /**
  * Wrapper encapsulant la réponse envoyée à une DataTable
  *
@@ -15,26 +13,36 @@ public final class DatatablesResponse<T extends GenericDomain> {
     /**
      * Contenu de la table à afficher
      */
-    private final List<T> aaData;
+    private final Iterable<T> aaData;
 
     /**
      * Nombre total d'enregistrements sur une page (enregistrements filtrés)
      */
-    private final Integer iTotalRecords;
+    private Integer iTotalRecords;
 
     /**
      * Nombre total d'enregistrements (total de toutes les pages)
      */
-    private final Long iTotalDisplayRecords;
+    private Long iTotalDisplayRecords;
 
     /**
      * Compteur d'appel au serveur
      */
-    private final Integer sEcho;
+    private Integer sEcho;
 
     /**
-     * Constructeur
-     * @param page objet contenant les informations sur la page à afficher
+     * Constructeur pour les réponse avec pagination déléguée au client
+     *
+     * @param aaData contenu de la table
+     */
+    public DatatablesResponse(Iterable<T> aaData) {
+        this.aaData = aaData;
+    }
+
+    /**
+     * Constructeur pour les réponses avec pagination
+     *
+     * @param page  objet contenant les informations sur la page à afficher
      * @param sEcho compteur d'appel au serveur
      */
     public DatatablesResponse(Page<T> page, Integer sEcho) {
@@ -44,7 +52,7 @@ public final class DatatablesResponse<T extends GenericDomain> {
         this.sEcho = sEcho;
     }
 
-    public List<T> getAaData() {
+    public Iterable<T> getAaData() {
         return aaData;
     }
 
@@ -52,12 +60,24 @@ public final class DatatablesResponse<T extends GenericDomain> {
         return iTotalRecords;
     }
 
+    public void setiTotalRecords(Integer iTotalRecords) {
+        this.iTotalRecords = iTotalRecords;
+    }
+
     public Long getiTotalDisplayRecords() {
         return iTotalDisplayRecords;
     }
 
+    public void setiTotalDisplayRecords(Long iTotalDisplayRecords) {
+        this.iTotalDisplayRecords = iTotalDisplayRecords;
+    }
+
     public Integer getsEcho() {
         return sEcho;
+    }
+
+    public void setsEcho(Integer sEcho) {
+        this.sEcho = sEcho;
     }
 
     @Override

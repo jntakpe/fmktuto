@@ -13,7 +13,10 @@ import fr.sg.fmk.util.FmkUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -55,25 +58,16 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Renvoi toutes les données d'une table. Datatables gère ensuite le filtrage, le tri et la pagination.
-     *
-     * @return entités à afficher
-     */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    @ResponseBody
-    public Iterable<T> list() {
-        return getService().findAll();
-    }
-
-    /**
-     * Renvoi les données déjà filtrées, triées et paginées en fonction des paramètres Datatables
+     * Renvoi les données déjà filtrées, triées et paginées en fonction des paramètres Datatables ou alors la reuqête
+     * Datatables est vide renvoi de toutes les données
      *
      * @param datatablesRequest état de la liste DataTables
      * @return entités filtrées, triées et paginées à afficher
      */
-    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public DatatablesResponse<T> page(@DatatablesParams DatatablesRequest datatablesRequest) {
+        if (datatablesRequest.isEmpty()) return new DatatablesResponse<T>(getService().findAll());
         return new DatatablesResponse<T>(getService().page(datatablesRequest), datatablesRequest.getCallCounter());
     }
 
@@ -116,7 +110,7 @@ public abstract class GenericController<T extends GenericDomain> {
     }
 
     /**
-     * Créé ou modifie l'entité (utilisé pour les appels non-AJAX)
+     * Créé ou modifie l'entité (utilisé pour les appels non-AJAX - écrans détails)
      *
      * @param domain entité à sauvegarder
      * @param result résultat de la validation (JSR-303 Bean validation)
@@ -139,6 +133,7 @@ public abstract class GenericController<T extends GenericDomain> {
      * Créé ou modifie l'entité (utilisé pour les appels AJAX)
      *
      * @param domain entité à sauvegarder
+     * @param result résultat de la validation (JSR-303 Bean validation)
      * @return message indiquant le résultat de l'opération
      */
     @RequestMapping(method = RequestMethod.PUT)
@@ -151,25 +146,6 @@ public abstract class GenericController<T extends GenericDomain> {
         String msg = messageManager.getMessage(isNew ? "create.success" : "update.success", entity);
         messageManager.logMessage(isNew ? "MSG00001" : "MSG00002", LogLevel.INFO, username, entity);
         return ResponseMessage.getSuccessMessage(msg, entity);
-    }
-
-    /**
-     * Supprime l'entité correspondante à l'identifiant lors d'un appel non-AJAX.
-     * La page sera donc rechargée à l'issue de la suppression de l'entité.
-     *
-     * @param id identifiant de l'entité à supprimer
-     * @return page à afficher
-     */
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public ModelAndView delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView(getRedirectListView());
-        T domain = getService().findOne(id);
-        if (domain == null) throw getService().createBussinessException(BusinessCode.ENTITY_NOT_FOUND, id);
-        getService().delete(domain);
-        messageManager.logMessage("MSG00003", LogLevel.INFO, FmkUtils.getCurrentUsername(), domain);
-        String msg = messageManager.getMessage("delete.success", domain);
-        redirectAttributes.addFlashAttribute(ResponseMessage.getSuccessMessage(msg));
-        return mv;
     }
 
     /**
