@@ -1,10 +1,13 @@
 package fr.sg.tuto.domain;
 
 import fr.sg.fmk.domain.GenericDomain;
+import org.hibernate.validator.constraints.Email;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author jntakpe
@@ -13,13 +16,22 @@ import javax.validation.constraints.Digits;
 @SequenceGenerator(name = "SG", sequenceName = "SEQ_PERSONNES")
 public class Personne extends GenericDomain {
 
+    @NotNull
+    @Column(nullable = false)
     private String nom;
 
+    @NotNull
+    @Column(nullable = false)
     private String prenom;
 
+    @NotNull
     @Digits(integer = 10, fraction = 0)
+    @Column(nullable = false)
     private String telephone;
 
+    @NotNull
+    @Email
+    @Column(nullable = false)
     private String email;
 
     public String getNom() {

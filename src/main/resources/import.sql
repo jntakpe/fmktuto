@@ -1,9 +1,3 @@
--- Fichier chargé au démarrage du serveur si JPA est configuré en mode create,create-drop ou update
-INSERT INTO public.parameter (id, version, code, format, label, value) VALUES (1, 0, 'default.timeout', 'N', 'Durée d''affichage des alertes', '10000');
-INSERT INTO public.parameter (id, version, code, format, label, value) VALUES (2, 0, 'default.date.format', 'X', 'Format date par défaut', 'dd/MM/yyyy');
-INSERT INTO public.parameter (id, version, code, format, label, value) VALUES (3, 0, 'default.success.message', 'X', 'Message de succés par défaut', 'Opération effectuée.');
-INSERT INTO public.parameter (id, version, code, format, label, value) VALUES (4, 0, 'default.error.message', 'X', 'Message d''erreur par défaut', 'Une erreur inconnue est survenue.');
-
 -- Insertion des personnes
 INSERT INTO personne (id, version, email, nom, prenom, telephone) VALUES (1, 0, 'luctus.sit@blandit.edu', 'Griffith', 'Bernard', '04 18 29 15 79');
 INSERT INTO personne (id, version, email, nom, prenom, telephone) VALUES (2, 0, 'vestibulum.nec.euismod@odio.edu', 'Silva', 'Roth', '04 83 88 73 03');

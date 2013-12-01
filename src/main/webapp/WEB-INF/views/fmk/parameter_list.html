@@ -4,6 +4,10 @@
 <body>
 <header th:include="../fragments/menuFragment :: fullMenu"></header>
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a th:href="@{/}" th:text="#{home.title}"></a></li>
+        <li><a th:href="@{/param}" th:text="#{parameter.title}"></a></li>
+    </ol>
     <div class="row">
         <div th:include="../fragments/alertFragment :: alert"></div>
         <h2 th:text="#{parameter.title}"></h2>
@@ -63,7 +67,7 @@
         <div th:replace="../fragments/buttonFragment :: newPopupFragment"></div>
     </div>
 </div>
-<div id="parameter_popup" class="modal collapse edit-popup" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="parameter_popup" class="modal collapse edit-popup" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,7 +77,7 @@
                 <h3 class="modal-title edit-title" th:text="#{parameter.edit}"></h3>
             </div>
             <div class="modal-body">
-                <form id="popupForm" class="form-horizontal" role="form" data-reload="true" method="post">
+                <form id="popupForm" class="form-horizontal" data-reload="true" method="post">
                     <input type="hidden" id="id" name="id"/>
                     <input type="hidden" id="version" name="version"/>
 

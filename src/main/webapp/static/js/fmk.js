@@ -278,7 +278,7 @@ var fmk = {
             throw "La popup de confirmation n'est pas présente sur l'écran. Merci de l'importer.";
         }
         $popup.modal();
-        uri = this.getTableAttr($table, this.tableAttributes.deleteUri);
+        uri = fmk.getTableAttr($table, this.tableAttributes.deleteUri);
         uri = uri.match(/\/$/) ? uri + id : uri + "/" + id;
         $.ajax(uri + '/message').
             done(function (response) { //Récupération du message à afficher dans la popup
@@ -400,8 +400,13 @@ var fmk = {
             $(form).ajaxSubmit({
                 type: 'put',
                 success: function (response) {
-                    $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId)).modal('hide');
+                    if (!response) {
+                        throw "La réponse de la requête de sauvegarde est nulle. Merci de renvoyer un résultat";
+                    }
+                    var responseData = response.data,
+                        $popup = $('#' + fmk.getTableAttr($table, fmk.tableAttributes.editPopupId));
                     if (response.success) {
+                        $popup.modal('hide');
                         fmk.displaySuccess(response.message);
                         if (fmk.getTableAttr($table, fmk.tableAttributes.reload)) { //On recharge toutes les données
                             dataTable.fnReloadAjax();
@@ -411,7 +416,10 @@ var fmk = {
                             }
                             dataTable.fnAddData(response.data);
                         }
+                    } else if (responseData) {
+                        fmk.populateErrors(form, responseData);
                     } else {
+                        $popup.modal('hide');
                         fmk.displayError(response);
                     }
                 }
@@ -439,6 +447,23 @@ var fmk = {
                 $input.val(value);
             }
         });
+    },
+
+    /**
+     * A partir d'un objet JSON affiche les erreurs sur les champs d'un formulaire
+     * @param form formulaire
+     * @param errors erreurs renvoyées par le serveur
+     */
+    populateErrors: function (form, errors) {
+        for (var idx in errors) {
+            if (errors.hasOwnProperty(idx)) {
+                var $input = $(form).find('[name=' + errors[idx].field + ']'), $group = $input.closest('.form-group');
+                if (!$group.hasClass('has-error')) {
+                    $group.addClass('has-error');
+                }
+                $input.after("<span class='help-block'>" + errors[idx].defaultMessage + "</span>");
+            }
+        }
     },
 
     /**
@@ -470,7 +495,7 @@ $(function () {
          */
         fmkTable: function (dtOptions, validRules) {
             "use strict";
-            var $popup, dataTable, $popupForm, $popupSubmit;
+            var $popup, dataTable, $popupForm, $popupSubmit, $table = this;
             if (dtOptions.bServerSide && !dtOptions.sAjaxDataProp) {
                 dtOptions.sAjaxDataProp = "aaData"; //En cas de server-side, on wrap les données dans le champ aaData
             }
@@ -485,7 +510,7 @@ $(function () {
                 if ($popupForm.length === 1) {
                     $popupForm.data('validForm', $popupForm.validate({ //Initialisation de la validation
                         submitHandler: function (form) {
-                            fmk.saveRow(form, dataTable, this);
+                            fmk.saveRow(form, dataTable, $table);
                         },
                         rules: validRules
                     }));
@@ -500,7 +525,7 @@ $(function () {
          * Validation d'un formulaire géré par le framework.
          * @param validOptions options de validation (voir http://jqueryvalidation.org/category/plugin/)
          */
-        fmkValid : function (validOptions) {
+        fmkValid: function (validOptions) {
             this.data('validForm', this.validate(validOptions));
         }
     });
@@ -623,6 +648,7 @@ $(function () {
         var $form = $(this).find('form');
         $form.data('validForm').resetForm(); //Nettoie le formulaire au niveau validation
         $form.find('.has-error').removeClass('has-error'); //Enlève les inputs en erreur au niveau CSS
+        $form.find('form-group').find('span.help-block').remove(); // Enlève les erreurs affichées manuellement
         $form.find(":hidden").val('');
     });
 

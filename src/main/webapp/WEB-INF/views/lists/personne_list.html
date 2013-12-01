@@ -4,6 +4,10 @@
 <body>
 <header th:include="../fragments/menuFragment :: fullMenu"></header>
 <div class="container">
+    <ol class="breadcrumb">
+        <li><a th:href="@{/}" th:text="#{home.title}"></a></li>
+        <li><a th:href="@{/personne}" th:text="#{personne.list.title}"></a></li>
+    </ol>
     <div class="row">
         <div class="table-container">
             <div th:include="../fragments/alertFragment :: alert"></div>

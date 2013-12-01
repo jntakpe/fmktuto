@@ -1,8 +1,12 @@
 package fr.sg.fmk.domain;
 
 import fr.sg.fmk.constant.Format;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Entité représentant un paramètre
@@ -13,16 +17,23 @@ import javax.persistence.*;
 @SequenceGenerator(name = "SG", sequenceName = "SEQ_PARAMETER")
 public class Parameter extends GenericDomain {
 
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String code;
 
+    @NotBlank
+    @Size(min = 10)
+    @Column(nullable = false)
     private String label;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Format format;
 
+    @NotNull
     @Column(nullable = false)
+    @Digits(integer = 1, fraction = 0)
     private String value;
 
     public String getCode() {

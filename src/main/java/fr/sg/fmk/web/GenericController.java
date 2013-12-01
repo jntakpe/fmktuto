@@ -36,7 +36,6 @@ public abstract class GenericController<T extends GenericDomain> {
     @Autowired
     protected MessageManager messageManager;
 
-
     /**
      * Méthode permettant de récupérer le service à utiliser.
      *
@@ -119,8 +118,9 @@ public abstract class GenericController<T extends GenericDomain> {
     /**
      * Créé ou modifie l'entité (utilisé pour les appels non-AJAX)
      *
-     * @param domain             entité à sauvegarder
-     * @param redir attributs de redirection lus sur la page suivante
+     * @param domain entité à sauvegarder
+     * @param result résultat de la validation (JSR-303 Bean validation)
+     * @param redir  attributs de redirection lus sur la page suivante
      * @return page à afficher
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -143,7 +143,8 @@ public abstract class GenericController<T extends GenericDomain> {
      */
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseMessage save(@ModelAttribute T domain) {
+    public ResponseMessage save(@Valid T domain, BindingResult result) {
+        if (result.hasErrors()) return ResponseMessage.getErrorMessage(result.getFieldErrors());
         boolean isNew = domain.getId() == null;
         T entity = getService().save(domain);
         String username = FmkUtils.getCurrentUsername();

@@ -3,6 +3,7 @@ body {
     padding-bottom: 60px;
 }
 
+
 /*! Affichage d'une table sans retour à la ligne dans les cellules */
 table.dataTable.wrap {
     table-layout: fixed; /* Force la taille de la table */
