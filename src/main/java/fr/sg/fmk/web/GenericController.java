@@ -50,7 +50,7 @@ public abstract class GenericController<T extends GenericDomain> {
      * Affiche la page liste
      *
      * @return le chemin de la page à afficher. Pour modifier le nom de la vue de la liste à afficher,
-     *         veuillez utiliser {@link fr.sg.fmk.web.GenericController#getListViewPath()}
+     * veuillez utiliser {@link fr.sg.fmk.web.GenericController#getListViewPath()}
      */
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView display() {

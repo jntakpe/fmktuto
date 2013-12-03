@@ -21,7 +21,7 @@
 
     <mvc:annotation-driven>
         <mvc:argument-resolvers>
-            <bean class="fr.sg.fmk.service.impl.DatatablesRequestResolver" />
+            <bean class="fr.sg.fmk.service.impl.DatatablesRequestResolver"/>
         </mvc:argument-resolvers>
     </mvc:annotation-driven>
 

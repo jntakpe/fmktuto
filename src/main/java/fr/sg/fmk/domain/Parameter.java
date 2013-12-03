@@ -75,9 +75,8 @@ public class Parameter extends GenericDomain {
 
         Parameter parameter = (Parameter) o;
 
-        if (code != null ? !code.equals(parameter.code) : parameter.code != null) return false;
+        return !(code != null ? !code.equals(parameter.code) : parameter.code != null);
 
-        return true;
     }
 
     @Override
@@ -87,10 +86,9 @@ public class Parameter extends GenericDomain {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Parameter{");
-        sb.append("label='").append(label).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "Parameter{" +
+                "label='" + label + '\'' +
+                ", value='" + value + '\'' +
+                '}';
     }
-
 }

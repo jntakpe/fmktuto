@@ -94,11 +94,13 @@ public final class DatatablesRequest {
         for (int i = 0; i < sortingColNb; i++) {
             String sSortingCol = request.getParameter(DTRequest.I_SORT_COL.getParam() + i);
             Integer sortingCol = StringUtils.isNotBlank(sSortingCol) ? Integer.parseInt(sSortingCol) : null;
-            ColumnProp columnProp = columnProps.get(sortingCol);
-            String sDir = request.getParameter(DTRequest.S_SORT_DIR.getParam() + i);
-            columnProp.setSortDirection(StringUtils.isNotBlank(sDir) ? Sort.Direction.fromString(sDir) : null);
-            columnProp.setFiltered(!columnProp.getSearch().isEmpty());
-            columnProp.setSorted(true);
+            if (sortingCol != null) {
+                ColumnProp columnProp = columnProps.get(sortingCol);
+                String sDir = request.getParameter(DTRequest.S_SORT_DIR.getParam() + i);
+                columnProp.setSortDirection(StringUtils.isNotBlank(sDir) ? Sort.Direction.fromString(sDir) : null);
+                columnProp.setFiltered(!columnProp.getSearch().isEmpty());
+                columnProp.setSorted(true);
+            }
         }
 
         return new DatatablesRequest(displayStart, displayLength, columnProps, echo, search);

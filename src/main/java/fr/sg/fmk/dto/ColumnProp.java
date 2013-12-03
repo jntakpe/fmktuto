@@ -49,11 +49,12 @@ public final class ColumnProp {
 
     /**
      * Constructeur privé appelé par la méthode statique de build
-     * @param name nom de la colonne
-     * @param sortable colonne triable
+     *
+     * @param name       nom de la colonne
+     * @param sortable   colonne triable
      * @param filterable colonne filtrable
-     * @param search valeur du champ de recherche
-    */
+     * @param search     valeur du champ de recherche
+     */
     private ColumnProp(String name, boolean sortable, boolean filterable, String search) {
         this.name = name;
         this.sortable = sortable;
@@ -63,8 +64,9 @@ public final class ColumnProp {
 
     /**
      * Méthode statique de création d'instance
+     *
      * @param request requête envoyée par DataTables
-     * @param idx index de la colonne
+     * @param idx     index de la colonne
      * @return l'instance initialisée
      */
     public static ColumnProp newInstance(HttpServletRequest request, int idx) {

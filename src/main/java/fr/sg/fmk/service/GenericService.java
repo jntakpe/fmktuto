@@ -26,7 +26,6 @@ public interface GenericService<T extends GenericDomain> {
      *
      * @param id identifiant de l'entité
      * @return l'entité possédant cette id
-     * @nullable
      */
     T findOne(Long id);
 

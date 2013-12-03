@@ -73,9 +73,8 @@ public class Personne extends GenericDomain {
 
         Personne personne = (Personne) o;
 
-        if (email != null ? !email.equals(personne.email) : personne.email != null) return false;
+        return !(email != null ? !email.equals(personne.email) : personne.email != null);
 
-        return true;
     }
 
     @Override

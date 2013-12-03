@@ -14,7 +14,7 @@
         <s:intercept-url pattern="/*" access="isFullyAuthenticated()"/>
         <s:form-login login-processing-url="/login" login-page="/connexion" always-use-default-target="true"
                       authentication-failure-url="/connexion?error=authFailure" default-target-url="/portal"/>
-        <s:logout logout-url="/logout" delete-cookies="JSESSIONID" invalidate-session="false" />
+        <s:logout logout-url="/logout" delete-cookies="JSESSIONID" invalidate-session="false"/>
         <s:session-management invalid-session-url="/connexion?error=sessionExpired">
             <s:concurrency-control max-sessions="1" expired-url="/connexion?error=sessionExpiredDuplicateLogin"/>
         </s:session-management>

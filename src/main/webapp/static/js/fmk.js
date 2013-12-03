@@ -270,7 +270,7 @@ var fmk = {
      */
     displayConfirmPopup: function (id, $event) {
         "use strict";
-        var uri, $table = $event.closest("table[id^=dt_]"), $popup = $("#confirmDeletePopup"); //Récupération de la table
+        var uri, $table = $event.closest("table[id^=dt_]"), $popup = $("#confirmDeletePopup"); //Récup de la table
         if (!$table.length) {
             throw "La table est introuvable. Le nom d'une datatable doit commencer par 'dt_'.";
         }
