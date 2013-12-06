@@ -9,7 +9,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:META-INF/spring/applicationContext.xml</param-value>
+        <param-value>classpath*:spring/applicationContext.xml</param-value>
     </context-param>
 
     <context-param>
@@ -36,6 +36,10 @@
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:spring/applicationContext-web.xml</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -80,10 +84,5 @@
         <filter-name>httpPutFormFilter</filter-name>
         <servlet-name>dispatcher</servlet-name>
     </filter-mapping>
-
-    <persistence-unit-ref>
-        <persistence-unit-ref-name>fmktutoPU</persistence-unit-ref-name>
-        <persistence-unit-name>fmktutoPU</persistence-unit-name>
-    </persistence-unit-ref>
 
 </web-app>

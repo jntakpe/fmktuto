@@ -17,27 +17,31 @@
                            http://www.springframework.org/schema/data/jpa
                            http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd">
 
-    <jee:jndi-lookup id="fmktutoDS" jndi-name="java:/comp/env/jdbc/fmktutoDS" expected-type="javax.sql.DataSource"/>
+    <jee:jndi-lookup id="dataSource" jndi-name="java:/comp/env/jdbc/fmktutoDS" expected-type="javax.sql.DataSource"/>
+
+    <tx:annotation-driven/>
+
+    <jpa:repositories base-package="fr.sg.fmk.repository, fr.sg.tuto.repository"/>
+
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:sql/parameters.sql"/>
+    </jdbc:initialize-database>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
-        <property name="dataSource" ref="fmktutoDS"/>
+        <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="fr.sg.fmk.domain, fr.sg.tuto.domain"/>
-        <property name="${persistence.prop.name}" value="${persistence.prop.value}"/>
+        <property name="persistenceUnitName" value="fmktutoPU" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <tx:annotation-driven/>
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
 
-    <jpa:repositories base-package="fr.sg.fmk.repository, fr.sg.tuto.repository"/>
-
-    <jdbc:initialize-database data-source="fmktutoDS">
-        <jdbc:script location="classpath:sql/parameters.sql"/>
-    </jdbc:initialize-database>
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
 </beans>

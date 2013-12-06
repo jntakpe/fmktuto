@@ -17,7 +17,7 @@
         <version.spring>3.2.5.RELEASE</version.spring>
 
         <!-- Spring Data JPA -->
-        <version.spring-data-jpa>1.4.1.RELEASE</version.spring-data-jpa>
+        <version.spring-data-jpa>1.4.2.RELEASE</version.spring-data-jpa>
 
         <!-- Spring security -->
         <version.spring-security>3.1.4.RELEASE</version.spring-security>
@@ -191,25 +191,21 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
                 <version>${version.hibernate}</version>
-                <scope>${hibernate.scope}</scope>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-c3p0</artifactId>
                 <version>${version.hibernate}</version>
-                <scope>${hibernate.scope}</scope>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
                 <version>${version.hibernate}</version>
-                <scope>${hibernate.scope}</scope>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${version.hibernate-validator}</version>
-                <scope>${hibernate.scope}</scope>
             </dependency>
 
             <!-- Templating -->
@@ -591,6 +587,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
+
             <!-- Génération du meta-model JPA -->
             <plugin>
                 <groupId>org.bsc.maven</groupId>
@@ -613,6 +610,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
             <!-- Génération meta-model QueryDSL -->
             <plugin>
                 <groupId>com.mysema.maven</groupId>
@@ -638,25 +636,4 @@
             </resource>
         </resources>
     </build>
-    <profiles>
-        <profile>
-            <id>tomcat</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <hibernate.scope>compile</hibernate.scope>
-                <persistence.prop.name>persistenceUnitName</persistence.prop.name>
-                <persistence.prop.value>fmktutoPU</persistence.prop.value>
-            </properties>
-        </profile>
-        <profile>
-            <id>jboss</id>
-            <properties>
-                <hibernate.scope>provided</hibernate.scope>
-                <persistence.prop.name>persistenceXmlLocation</persistence.prop.name>
-                <persistence.prop.value>classpath*:META-INF/persistence.xml</persistence.prop.value>
-            </properties>
-        </profile>
-    </profiles>
 </project>
