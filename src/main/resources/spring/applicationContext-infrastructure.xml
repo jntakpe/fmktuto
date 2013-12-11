@@ -25,6 +25,7 @@
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:sql/parameters.sql"/>
+        <jdbc:script location="classpath:sql/persons.sql"/>
     </jdbc:initialize-database>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
