@@ -641,7 +641,7 @@ $(function () {
         $form.data('validForm').resetForm(); //Nettoie le formulaire au niveau validation
         $form.find('.has-error').removeClass('has-error'); //Enlève les inputs en erreur au niveau CSS
         $form.find('form-group').find('span.help-block').remove(); // Enlève les erreurs affichées manuellement
-        $form.find(":hidden").val('');
+        $form.find(":input").val('');
     });
 
     //Reset aussi la validation si on reset le form
